@@ -7,6 +7,11 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
 REQUIRED = {"name", "description", "version", "metadata"}
+for manifest in [ROOT / ".claude-plugin" / "plugin.json", ROOT / ".codex-plugin" / "plugin.json"]:
+    if not manifest.exists():
+        raise SystemExit(f"VALIDATION FAILED\n- missing plugin manifest: {manifest.relative_to(ROOT)}")
+    if '"name"' not in manifest.read_text() or '"version"' not in manifest.read_text():
+        raise SystemExit(f"VALIDATION FAILED\n- malformed plugin manifest: {manifest.relative_to(ROOT)}")
 BANNED = [
     r"decision-path-authoring", r"comparison-and-dependencies",
     r"causal-claim-and-term-integrity", r"modular-learning-package",

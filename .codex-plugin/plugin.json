@@ -1,0 +1,6 @@
+{
+  "name": "vanillacore-giga-cloud",
+  "version": "0.1.0",
+  "description": "Public-safe cloud decision skills for GIGA agents.",
+  "skills": "./skills/"
+}

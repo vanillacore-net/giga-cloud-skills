@@ -13,8 +13,8 @@ These are agent-consumable skills. They are not Hermes internal editorial or rel
 
 ## Platform integration
 
-- **Claude Code:** `.claude-plugin/plugin.json` identifies this repository as a plugin and Claude discovers skill folders beneath `skills/`.
-- **Codex:** each skill follows the open Agent Skills layout and includes `agents/openai.yaml` metadata. Install a skill directory, or distribute the repository as an Agent Skills plugin.
+- **Claude Code:** `.claude-plugin/plugin.json` identifies this repository as a Claude plugin and Claude discovers skill folders beneath `skills/`.
+- **Codex:** `.codex-plugin/plugin.json` packages the same `skills/` directory as a Codex plugin. In Codex CLI, use `/plugins` to install it from a configured marketplace, then begin a new session. Each skill also includes `agents/openai.yaml` metadata.
 
 ## Data boundary
 
