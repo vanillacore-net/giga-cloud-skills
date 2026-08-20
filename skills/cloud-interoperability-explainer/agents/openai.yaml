@@ -1,0 +1,5 @@
+interface:
+  display_name: Cloud Interoperability Explainer
+  short_description: Explain causal links, conditions, and limits.
+policy:
+  allow_implicit_invocation: true

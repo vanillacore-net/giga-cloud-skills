@@ -1,0 +1,5 @@
+interface:
+  display_name: Workload Cloud-Fit Assessment
+  short_description: Identify workload constraints and evidence needs.
+policy:
+  allow_implicit_invocation: true

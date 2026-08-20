@@ -1,0 +1,5 @@
+interface:
+  display_name: Cloud Delivery Model Advisor
+  short_description: Frame delivery-model options from workload facts.
+policy:
+  allow_implicit_invocation: true

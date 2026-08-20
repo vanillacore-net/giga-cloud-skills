@@ -1,0 +1,5 @@
+interface:
+  display_name: Cloud Decision Gap Discovery
+  short_description: Surface unanswered questions and evidence needs.
+policy:
+  allow_implicit_invocation: true
