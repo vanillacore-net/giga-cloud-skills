@@ -1,0 +1,5 @@
+interface:
+  display_name: Cloud Decision Matrix Steward
+  short_description: Maintain one reviewable hosting decision matrix.
+policy:
+  allow_implicit_invocation: true

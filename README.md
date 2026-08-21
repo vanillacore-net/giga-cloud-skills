@@ -4,10 +4,11 @@ A portable plugin package for Claude Code and Codex. It gives delivery, sales, r
 
 ## Published agent skills
 
-- `cloud-delivery-model-advisor`: frames a cloud delivery-model decision from a workload and operating context.
-- `workload-cloud-fit-assessment`: identifies workload characteristics, decision constraints, and missing facts.
-- `cloud-interoperability-explainer`: explains the conditions and mechanisms that can make cloud platforms support interoperability.
-- `cloud-decision-gap-discovery`: turns vague cloud questions into a bounded set of local decisions, evidence needs, and deeper routes.
+- `cloud-delivery-model-advisor`: compares public-service hosting and cloud delivery options under supplied constraints.
+- `workload-cloud-fit-assessment`: profiles service facts, uncertainty, and the institutional checks that must follow.
+- `cloud-interoperability-explainer`: explains cloud, interoperability, portability, and dependency conditions without slogans.
+- `cloud-decision-gap-discovery`: prioritizes unanswered hosting and cloud evidence needs.
+- `cloud-decision-matrix-steward`: maintains one reviewable, evidence-based hosting decision matrix.
 
 These are agent-consumable skills. They are not Hermes internal editorial or release-control skills.
 
