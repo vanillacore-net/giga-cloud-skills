@@ -1,7 +1,7 @@
 ---
 name: workload-cloud-fit-assessment
 description: Profile service facts that shape hosting and cloud choices.
-version: 0.2.0
+version: 0.3.0
 metadata:
   hermes:
     tags: [cloud, hosting, workload, assessment, decision-support]
@@ -15,7 +15,7 @@ Use when an agent has a public-service or workload description and needs a disci
 1. Extract service purpose, users, current hosting condition, data and records, service criticality, availability and recovery need, latency, demand and change pattern, integration dependencies, connectivity, and lifecycle maturity.
 2. Record constraints in accountability, jurisdiction, procurement, contracts, operating capability, budget and lifecycle cost, resilience, portability and exit planning.
 3. Mark every unsupported assumption as unknown.
-4. Explain how each characteristic changes the questions to test. Include retain and improve, non-cloud, managed hosting, infrastructure, platform and SaaS routes where relevant. Do not equate a workload class with a prescribed model.
+4. Explain how each characteristic changes the questions to test. Include retain and improve, non-cloud, managed hosting, infrastructure, platform and SaaS routes where relevant. Record placement and capacity, connectivity and exposure, identity and administration, and data, configuration and recovery as separate conditions. Do not equate a workload class with a prescribed model.
 5. Hand off institution-level questions that workload facts cannot answer, including legal position, operating ownership, supplier terms and exit feasibility.
 6. Return the minimum additional evidence needed for a reversible next decision.
 

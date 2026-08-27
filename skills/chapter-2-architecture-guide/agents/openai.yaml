@@ -1,0 +1,5 @@
+interface:
+  display_name: Chapter 2 Architecture Guide
+  short_description: Turn service needs into foundation and platform questions.
+policy:
+  allow_implicit_invocation: true

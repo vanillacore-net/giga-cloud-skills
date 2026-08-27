@@ -1,7 +1,7 @@
 ---
 name: cloud-decision-matrix-steward
 description: Maintain one evidence-based public-service hosting matrix.
-version: 0.1.0
+version: 0.2.0
 metadata:
   hermes:
     tags: [cloud, hosting, decision-matrix, evidence, public-sector]
@@ -28,7 +28,7 @@ assessment_inputs:
 
 ## Procedure
 
-1. Use one shared criterion set: service criticality and continuity; data and records; demand, performance and connectivity; integration; accountability and control; jurisdiction and sovereignty; operating capacity; lifecycle cost and contracts; dependency; interoperability; portability and exit.
+1. Use one shared criterion set: service criticality and continuity; data and records; demand, performance and connectivity; integration; accountability and control; jurisdiction and sovereignty; operating capacity; lifecycle cost and contracts; placement and recovery capacity; public, partner and administrative routes; shared dependencies and common failure domains; platform responsibility boundary; interoperability; portability and exit.
 2. Record local evidence, assumptions, option-specific implications, trade-offs, evidence owner and validation status for every material criterion.
 3. Detect duplicated criteria, unsupported scoring, automatic-outcome claims and contradictions between inputs.
 4. Classify status as sufficient, needs validation, decision-blocking, suitable for a reversible pilot, or monitor during operation.

@@ -1,7 +1,7 @@
 ---
 name: cloud-decision-gap-discovery
 description: Prioritize unanswered hosting and cloud evidence needs.
-version: 0.2.0
+version: 0.3.0
 metadata:
   hermes:
     tags: [cloud, hosting, discovery, governance, decision-support]
@@ -13,7 +13,7 @@ Use when a hosting or cloud question is broad, premature or under-specified. It 
 ## Procedure
 
 1. Restate the operating or sourcing decision the requester appears to be making.
-2. Identify what is known about service purpose, workload, current hosting, data and jurisdiction, resilience, integration, accountability, skills, connectivity, procurement, contracts, lifecycle cost, migration and exit.
+2. Identify what is known about service purpose, workload, current hosting, data and jurisdiction, resilience, integration, accountability, skills, connectivity, procurement, contracts, lifecycle cost, migration and exit. Include foundation conditions: placement and recovery capacity, public and administrative routes, shared identity or data dependencies, and the responsibility boundary for any platform provider or partner.
 3. Separate questions that can be answered generically from questions requiring local evidence or specialist review.
 4. Classify every gap as decision-blocking, required before procurement or commitment, suitable for a reversible pilot, or monitor during operation.
 5. For each material gap, record the decision affected, evidence owner, validation method, consequence if unresolved and deeper route.

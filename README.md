@@ -4,6 +4,7 @@ A portable plugin package for Claude Code and Codex. It gives delivery, sales, r
 
 ## Published agent skills
 
+- `chapter-2-architecture-guide`: chapter-level entry point for turning a service need into foundation, platform, responsibility and readiness questions. It routes to the focused skills below when needed.
 - `cloud-delivery-model-advisor`: compares public-service hosting and cloud delivery options under supplied constraints.
 - `workload-cloud-fit-assessment`: profiles service facts, uncertainty, and the institutional checks that must follow.
 - `cloud-interoperability-explainer`: explains cloud, interoperability, portability, and dependency conditions without slogans.
@@ -16,6 +17,10 @@ These are agent-consumable skills. They are not Hermes internal editorial or rel
 
 - **Claude Code:** `.claude-plugin/plugin.json` identifies this repository as a Claude plugin and Claude discovers skill folders beneath `skills/`.
 - **Codex:** `.codex-plugin/plugin.json` packages the same `skills/` directory as a Codex plugin. In Codex CLI, use `/plugins` to install it from a configured marketplace, then begin a new session. Each skill also includes `agents/openai.yaml` metadata.
+
+## Install and use
+
+See [Install and use the GIGA Cloud Agent Plugin](docs/install-and-use.md) for Hermes direct installation, chapter-level invocation, focused-skill invocation, and Claude Code or Codex plugin use.
 
 ## Data boundary
 

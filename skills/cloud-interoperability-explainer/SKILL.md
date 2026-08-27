@@ -1,7 +1,7 @@
 ---
 name: cloud-interoperability-explainer
 description: Explain cloud, interoperability, portability and dependencies.
-version: 0.2.0
+version: 0.3.0
 metadata:
   hermes:
     tags: [cloud, interoperability, portability, integration, public-sector]
@@ -16,7 +16,7 @@ Use when an agent must explain the relationship between cloud delivery, interope
 2. Distinguish interoperability from portability. Interoperability concerns meaningful, governed exchange. Portability concerns moving data, configurations, workloads and operations to a viable target.
 3. Explain the mechanism that may help, such as agreed data models, APIs, standardised runtime environments, repeatable deployment, managed integration points, common identity controls or shared observability.
 4. State the required conditions: governance, authority, standards and interface assumptions, identity and security controls, operating ownership, testing, skills, contracts and viable exit arrangements.
-5. Identify dependencies across data, identity, platform, network, observability, people and contracts. State what is and is not portable.
+5. Identify dependencies across data, identity, platform, network, observability, people and contracts. Distinguish a shared dependency from a common failure domain: it becomes a common failure domain when no independent path or effective recovery arrangement exists. State what is and is not portable.
 6. State the boundary clearly: cloud adoption, open source or nominal standards support does not automatically create interoperability, sovereignty, interchangeability or easy exit.
 7. Provide local questions, evidence needs and deeper routes when implementation detail is needed.
 

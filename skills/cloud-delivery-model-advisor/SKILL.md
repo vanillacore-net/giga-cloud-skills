@@ -1,7 +1,7 @@
 ---
 name: cloud-delivery-model-advisor
 description: Compare public-service hosting and cloud delivery options.
-version: 0.2.0
+version: 0.3.0
 metadata:
   hermes:
     tags: [cloud, hosting, delivery-model, public-sector, decision-support]
@@ -34,7 +34,7 @@ audience: decision-maker | practitioner | mixed
 ## Procedure
 
 1. State known facts, assumptions and missing facts separately.
-2. Consider the relevant option families without presuming cloud: retain and improve; owned or colocated infrastructure; managed hosting or dedicated infrastructure; rented virtual infrastructure or IaaS; managed platform or PaaS; SaaS; and applicable hybrid or multi-environment arrangements.
+2. Consider the relevant option families without presuming cloud: retain and improve; owned or colocated infrastructure; managed hosting or dedicated infrastructure; rented virtual infrastructure or IaaS; managed container platform or CaaS; managed Kubernetes; self-operated Kubernetes; managed platform or PaaS; SaaS; and applicable hybrid or multi-environment arrangements. Treat CaaS, managed Kubernetes and PaaS as overlapping contract models, not stack layers or interchangeable labels.
 3. Compare only viable options against shared criteria: service fit, retained accountability, control and jurisdiction, operating capacity, connectivity and integration, lifecycle cost and contracts, resilience, dependency, portability and exit.
 4. State conditions, mechanism, consequence and caveat for material claims. Do not describe cloud, SaaS, open source, standards or multi-cloud as automatic solutions.
 5. Return conditional fit, trade-offs, unknowns, local questions, evidence owners and deeper routes. Stop short of recommendation when decision-blocking evidence is absent.
