@@ -1,5 +1,5 @@
 ---
-name: chapter-2-architecture-guide
+name: public-service-platform-architecture
 description: Turn public-service needs into foundation and platform questions.
 version: 0.1.0
 metadata:

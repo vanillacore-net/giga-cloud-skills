@@ -1,6 +1,6 @@
 # Install and use the GIGA Cloud Agent Plugin
 
-The package has six user-facing skills. `chapter-2-architecture-guide` is the chapter-level entry point. It routes a service-architecture question through the five focused cloud skills when needed.
+The package has six user-facing skills. `public-service-platform-architecture` is the architecture-level entry point. It routes a service-architecture question through the five focused cloud skills when needed.
 
 ## Install in Hermes Agent
 
@@ -8,19 +8,19 @@ Install the direct raw `SKILL.md` URL for the chapter-level guide:
 
 ```bash
 hermes skills install \
-  https://git.vanillacore.net/giga/cloud-skills/raw/branch/main/skills/chapter-2-architecture-guide/SKILL.md
+  https://git.vanillacore.net/giga/cloud-skills/raw/branch/main/skills/public-service-platform-architecture/SKILL.md
 ```
 
 Start a new Hermes session after installation, then invoke it explicitly:
 
 ```text
-/skill chapter-2-architecture-guide
+/skill public-service-platform-architecture
 ```
 
 Or preload it from the command line:
 
 ```bash
-hermes --skills chapter-2-architecture-guide
+hermes --skills public-service-platform-architecture
 ```
 
 Check installation with:
@@ -34,7 +34,7 @@ hermes skills list
 Provide a service description and ask for the architecture decision frame. For example:
 
 ```text
-Use chapter-2-architecture-guide for a university enrolment service.
+Use public-service-platform-architecture for a university enrolment service.
 It serves students and staff through a public portal, uses federated identity,
 keeps enrolment records, exchanges data with a registry, and must recover before
 term starts. We need to decide what should be shared, where stronger boundaries

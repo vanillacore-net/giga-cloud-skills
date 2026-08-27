@@ -4,7 +4,7 @@ A portable plugin package for Claude Code and Codex. It gives delivery, sales, r
 
 ## Published agent skills
 
-- `chapter-2-architecture-guide`: chapter-level entry point for turning a service need into foundation, platform, responsibility and readiness questions. It routes to the focused skills below when needed.
+- `public-service-platform-architecture`: entry point for turning a service need into foundation, platform, responsibility and readiness questions. It routes to the focused skills below when needed.
 - `cloud-delivery-model-advisor`: compares public-service hosting and cloud delivery options under supplied constraints.
 - `workload-cloud-fit-assessment`: profiles service facts, uncertainty, and the institutional checks that must follow.
 - `cloud-interoperability-explainer`: explains cloud, interoperability, portability, and dependency conditions without slogans.
