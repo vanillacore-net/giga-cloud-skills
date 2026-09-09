@@ -1,8 +1,8 @@
 {
   "name": "vanillacore-cloud-skills",
-  "version": "0.2.0",
-  "description": "Cloud decision and knowledge-product control skills.",
+  "version": "0.3.0",
+  "description": "Learning skills for GIGA Cloud Chapters 1 to 4.",
   "author": {"name": "Karsten Samaschke"},
   "license": "Proprietary",
-  "keywords": ["cloud", "decision-support", "knowledge-products", "giga"]
+  "keywords": ["giga", "cloud", "learning", "architecture", "openstack", "kubernetes"]
 }

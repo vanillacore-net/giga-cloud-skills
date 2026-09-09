@@ -1,6 +1,6 @@
 {
   "name": "vanillacore-giga-cloud",
-  "version": "0.2.0",
-  "description": "Public-safe cloud decision skills for GIGA agents.",
+  "version": "0.3.0",
+  "description": "Learning skills for GIGA Cloud Chapters 1 to 4.",
   "skills": "./skills/"
 }

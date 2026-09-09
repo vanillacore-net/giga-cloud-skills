@@ -1,39 +1,50 @@
-# GIGA Cloud Agent Plugin
+# GIGA Cloud Learning Skills
 
-A portable plugin package for Claude Code and Codex. It gives delivery, sales, research, and writing agents a public-safe way to reason about cloud delivery choices without receiving Chapter 1 drafts, internal source material, meeting notes, or vault access.
+This repository packages nine public-safe agent skills for Claude Code, Codex, and direct skill installation. Learners can ask questions, learn concepts, build bounded artifacts, challenge claims, and review architecture or syntax across GIGA Cloud Chapters 1 to 4.
 
-## Published agent skills
+## Skill system
 
-- `public-service-platform-architecture`: entry point for turning a service need into foundation, platform, responsibility and readiness questions. It routes to the focused skills below when needed.
-- `cloud-delivery-model-advisor`: compares public-service hosting and cloud delivery options under supplied constraints.
-- `workload-cloud-fit-assessment`: profiles service facts, uncertainty, and the institutional checks that must follow.
-- `cloud-interoperability-explainer`: explains cloud, interoperability, portability, and dependency conditions without slogans.
-- `cloud-decision-gap-discovery`: prioritizes unanswered hosting and cloud evidence needs.
-- `cloud-decision-matrix-steward`: maintains one reviewable, evidence-based hosting decision matrix.
+`giga-cloud-learning-guide` is the cross-chapter learning coordinator. It keeps one case coherent, selects the earliest chapter that owns an unresolved question, enforces handoff contracts, reconciles conflicting findings, and reports architecture, content, syntax, and evidence separately. It is a skill of skills with its own task, not a directory of names.
 
-These are agent-consumable skills. They are not Hermes internal editorial or release-control skills.
+| Scope | Skill | Learner result |
+|---|---|---|
+| Chapters 1 to 4 | `giga-cloud-learning-guide` | Route, mode, handoff continuity, challenge, and final quality envelope |
+| Chapter 1 | `workload-cloud-fit-assessment` | A bounded service and workload profile |
+| Chapter 1 | `cloud-delivery-model-advisor` | A three-axis operating-arrangement comparison |
+| Chapters 1 to 4 | `cloud-interoperability-explainer` | Interoperability, portability, dependency, and exit findings |
+| Chapters 1 to 4 | `cloud-decision-gap-discovery` | Prioritised evidence gaps and stop conditions |
+| Chapter 1 | `cloud-decision-matrix-steward` | A reviewable service-arrangement decision record |
+| Chapter 2 | `public-service-platform-architecture` | A foundation-readiness architecture brief |
+| Chapter 3 | `iaas-foundation-practitioner` | An IaaS technical baseline with honest validation status |
+| Chapter 4 | `kubernetes-cluster-lifecycle-practitioner` | A Kubernetes cluster-runtime baseline on IaaS |
+
+The package intentionally uses nine coherent skills rather than separate skills for every OpenStack service, client interface, Kubernetes controller, or lifecycle operation.
+
+## Learning contract
+
+- `ask`: answer directly and separate transferable concepts, product mappings, assumptions, evidence status, and named sources.
+- `learn`: teach one bounded concept through a concrete service case, then test understanding.
+- `work`: use **Spec -> Run -> Validation. Repeat.** to produce a chapter handoff without inventing local facts.
+- `challenge`: obtain the learner's claim or attempted answer, then test assumptions, failure paths, ownership, and evidence.
+- `review`: return independent architecture, content, syntax, and evidence verdicts with repair actions.
+
+The machine-readable route and coverage contract is `learning-contract.json`. Human-readable handoffs are in `docs/handoff-contracts.md`. Reviewed chapter revisions and known source tensions are in `docs/source-and-scope-map.md`.
 
 ## Platform integration
 
-- **Claude Code:** `.claude-plugin/plugin.json` identifies this repository as a Claude plugin and Claude discovers skill folders beneath `skills/`.
-- **Codex:** `.codex-plugin/plugin.json` packages the same `skills/` directory as a Codex plugin. In Codex CLI, use `/plugins` to install it from a configured marketplace, then begin a new session. Each skill also includes `agents/openai.yaml` metadata.
+- **Claude Code:** `.claude-plugin/plugin.json` identifies this repository as a Claude plugin and discovers the folders under `skills/`.
+- **Codex:** `.codex-plugin/plugin.json` packages the same `skills/` directory. Each skill also has `agents/openai.yaml` metadata.
+- **Direct installation:** `docs/install-and-use.md` describes verified checkout installation and the conditions for public-URL installation.
 
-## Install and use
+## Data and authority boundary
 
-See [Install and use the GIGA Cloud Agent Plugin](docs/install-and-use.md) for Hermes direct installation, chapter-level invocation, focused-skill invocation, and Claude Code or Codex plugin use.
-
-## Data boundary
-
-The plugin contains public-safe workflows and structured outputs only. It does not contain Chapter 1 content or private evidence. An organisation may connect a restricted capability service later, but the plugin remains useful without it: it identifies what can be reasoned from supplied facts and what must be checked locally.
-
-## Private Forgejo wiki and GitBook
-
-A private Forgejo wiki makes sense as the editorial reading and review surface when its access list is controlled by VanillaCore. It gives reviewers a native, page-oriented view of draft length and flow. Do not treat it as a separate security control from the repository, because its history follows wiki permissions.
-
-Use the wiki for controlled authoring and review, then export an approved snapshot as Markdown, DOCX, or PDF into the GitBook release repository. See `docs/forgejo-wiki-to-gitbook.md`.
+The repository contains distilled, public-safe learning workflows, contracts, and exercises. It does not contain credentials, internal editorial controls, private evidence, organisation-specific topology, or a production approval. A skill may identify local evidence that is required, but it must not invent that evidence or disclose inaccessible provenance.
 
 ## Validation
 
 ```bash
 python3 scripts/validate_skills.py
+python3 scripts/test_learning_paths.py
 ```
+
+The first command validates package syntax, manifests, frontmatter, references, relationships, and public-safety markers. The second runs deterministic routing and Chapter 1 to 4 coverage tests. These checks validate the package, not a live cloud or cluster.

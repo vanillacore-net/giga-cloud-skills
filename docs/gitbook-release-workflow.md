@@ -11,7 +11,7 @@ Do not use a wiki as the security boundary. A wiki is useful for internal naviga
 ## Release sequence
 
 1. Draft against a versioned chapter contract in the authoring repository.
-2. Run the `cloud-product-control-pass` and resolve all must-fix findings.
+2. Run the approved public-release control review and resolve all must-fix findings.
 3. Human owner approves the release.
 4. Export the approved state as Markdown, DOCX, or PDF.
 5. Commit only approved Markdown and assets to the release repository, preferably as a clean release commit.

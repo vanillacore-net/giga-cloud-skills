@@ -1,0 +1,5 @@
+interface:
+  display_name: IaaS Foundation Practitioner
+  short_description: Learn, build, challenge, and review an IaaS baseline.
+policy:
+  allow_implicit_invocation: true
