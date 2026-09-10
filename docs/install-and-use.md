@@ -16,7 +16,7 @@ mkdir -p "$install_root"
 cp -R "skills/$skill" "$install_root/$skill"
 ```
 
-This copies `SKILL.md` and `references/chapter-contracts.md` together. For a URL hosted on a public endpoint accepted by Hermes, the equivalent command is:
+This copies `SKILL.md` and `references/chapter-contracts.md` together. For the Chapter 3 and Chapter 4 practitioner skills, the same checkout method also copies the practical `assets/operator-kit/` tree. For a URL hosted on a public endpoint accepted by Hermes, the equivalent command is:
 
 ```bash
 hermes skills install https://PUBLIC-HOST/PATH/giga-cloud-learning-guide/SKILL.md
@@ -35,6 +35,10 @@ Check discovery with `hermes skills list`. Start a new Hermes session after inst
 ```yaml
 mode: ask | learn | work | challenge | review
 chapter: auto | 1 | 2 | 3 | 4
+operation: assess | prepare | provision | validate | maintain | cleanup
+execution: explain | prepare | execute
+working_directory:
+change_approval:
 case:
   service_outcome:
   supplied_facts: []
@@ -65,9 +69,10 @@ values as unknown unless they appear in the supplied evidence.
 ```
 
 ```text
-Use kubernetes-cluster-lifecycle-practitioner in work mode. Consume this
-iaas_technical_baseline and help me produce a cluster_runtime_baseline_record.
-Keep Cluster API, CAPO, and Argo CD ownership separate.
+Use kubernetes-cluster-lifecycle-practitioner in work mode with operation assess
+and execution prepare. Consume this iaas_technical_baseline, copy the portable
+operator kit to /protected/work/chapter-4, run its offline checks, and prepare a
+cluster_runtime_baseline_record. Do not make a live change.
 ```
 
 ## Focused skills
@@ -80,10 +85,10 @@ Keep Cluster API, CAPO, and Argo CD ownership separate.
 | Turn unknowns into evidence work | `cloud-decision-gap-discovery` |
 | Build the Chapter 1 decision record | `cloud-decision-matrix-steward` |
 | Build or challenge the Chapter 2 architecture brief | `public-service-platform-architecture` |
-| Explain or review the Chapter 3 IaaS baseline | `iaas-foundation-practitioner` |
-| Explain or review the Chapter 4 cluster lifecycle | `kubernetes-cluster-lifecycle-practitioner` |
+| Learn, operate or review the Chapter 3 IaaS baseline | `iaas-foundation-practitioner` |
+| Learn, operate or review the Chapter 4 cluster lifecycle | `kubernetes-cluster-lifecycle-practitioner` |
 
-For a checked-out repository installation, repeat the copy command above with the focused skill name. A copied Chapter 3 or Chapter 4 skill keeps its local `references/` files. For a public URL installation, replace the final skill directory in the public endpoint URL.
+For a checked-out repository installation, repeat the copy command above with the focused skill name. A copied Chapter 3 or Chapter 4 skill keeps its local `references/` and `assets/operator-kit/` files. Before practical use, copy `assets/operator-kit/` again to a protected work location and run `lab/scripts/offline-validate.sh`; never write live inputs into the installed skill. A direct `SKILL.md` URL is sufficient only when the installer and hosting endpoint also preserve the complete operator-kit tree. Otherwise use the verified checkout or plugin installation for practical operations.
 
 ## Claude Code and Codex
 
@@ -91,4 +96,4 @@ The repository ships `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json
 
 ## Evidence discipline
 
-The skills can explain generic mechanisms and review supplied artifacts. They cannot infer project IDs, quotas, capacity, routes, credentials, provider versions, live reconciliation, recovery, or cleanup. Parser success and static validation remain distinct from live evidence. Source revisions and known contradictions are recorded in `source-and-scope-map.md`.
+The skills can explain generic mechanisms, review supplied artifacts, and execute the packaged Chapter 3 and 4 workflows when the host has the required tools and the operation gate is complete. They cannot infer project IDs, quotas, capacity, routes, credentials, provider versions, live reconciliation, recovery, or cleanup. Parser success and static validation remain distinct from live evidence. Source revisions and known contradictions are recorded in `source-and-scope-map.md`.

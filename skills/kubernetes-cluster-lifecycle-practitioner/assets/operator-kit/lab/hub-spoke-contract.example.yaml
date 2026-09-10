@@ -1,0 +1,35 @@
+example_only: true
+execution_approved: false
+source:
+  cluster: loadbalancer
+  kubeconfig: REPLACE_WITH_PROTECTED_KUBECONFIG_PATH
+  context: REPLACE_WITH_CONFIRMED_SOURCE_CONTEXT
+  api_server: REPLACE_WITH_CONFIRMED_SOURCE_API_SERVER
+  namespace: chapter4-path-test
+destination:
+  cluster: service-a
+  kubeconfig: REPLACE_WITH_PROTECTED_DESTINATION_KUBECONFIG_PATH
+  context: REPLACE_WITH_CONFIRMED_DESTINATION_CONTEXT
+  api_server: REPLACE_WITH_CONFIRMED_DESTINATION_API_SERVER
+  envoy_service:
+    namespace: projectcontour
+    name: envoy
+  ingress:
+    namespace: chapter4-path-test
+    name: destination
+    class: contour
+    host: service-a.chapter4.invalid
+    path: /healthz
+    backend_service: destination
+  expected_status: 200
+network_contract:
+  edge_entry: REPLACE_WITH_APPROVED_EDGE_ENTRY
+  transit_route: REPLACE_WITH_APPROVED_ROUTE_REFERENCE
+  return_route: REPLACE_WITH_APPROVED_RETURN_ROUTE_REFERENCE
+  policy_reference: REPLACE_WITH_APPROVED_POLICY_REFERENCE
+  dns_requirement: REPLACE_WITH_APPROVED_DNS_RESULT
+  mtu_requirement: REPLACE_WITH_VALIDATED_MTU
+status:
+  control_plane_path: not-tested
+  data_path: not-tested
+  evidence_file: REPLACE_WITH_PUBLIC_SAFE_EVIDENCE_PATH

@@ -1,0 +1,14 @@
+environment-contract.yaml
+clouds.yaml
+secure.yaml
+__pycache__/
+*.pyc
+*.pem
+*.key
+*.tfvars
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/
+evidence/*.json
+!evidence/*.example.json

@@ -74,6 +74,17 @@ iaas_technical_baseline:
   stable_resource_identifiers: []
   cross_service_validation: []
   cleanup_or_retention_decision:
+  operator_execution:
+    kit_source:
+    operation:
+    working_directory:
+    execution_level: explained | prepared | offline-validated | live-executed
+    change_approval:
+    checks: []
+    changed_resource_ids: []
+    evidence: []
+    rollback_or_cleanup:
+    status: passed | failed | blocked | unverified
   static_validation: []
   live_validation: []
   assumptions_and_deviations: []
@@ -94,10 +105,25 @@ cluster_runtime_baseline_record:
   cluster_api_conditions:
   machine_server_node_identifier_chain: []
   cni_and_node_readiness:
+  reconciled_cluster_addons:
+    cert_manager:
+    private_contour_envoy_ingress:
+    storage_smoke_baseline:
   edge_to_spoke_path_test:
   gitops_scope_and_revision:
   lifecycle_change_evidence: []
   cleanup_or_retention_decision:
+  operator_execution:
+    kit_source:
+    operation:
+    working_directory:
+    execution_level: explained | prepared | offline-validated | live-executed
+    change_approval:
+    checks: []
+    changed_resource_ids: []
+    evidence: []
+    rollback_or_cleanup:
+    status: passed | failed | blocked | unverified
   static_validation: []
   live_validation: []
   assumptions_and_deviations: []
@@ -130,8 +156,8 @@ review:
 - [Chapter 2 at reviewed revision](https://git.vanillacore.net/giga/content/src/commit/1ad5168a92e0b5187b99ef740e4a9c5f0c251c5b/chapter-2/chapter-2.md)
 - [Chapter 3 at reviewed revision](https://git.vanillacore.net/giga/content/src/commit/65055f17aaf13cf1944e2f4c4e1180dd3b94478a/chapter-3/chapter-3.md)
 - [Chapter 3 lab](https://git.vanillacore.net/giga/content/src/commit/65055f17aaf13cf1944e2f4c4e1180dd3b94478a/chapter-3/lab/README.md)
-- [Chapter 4 at reviewed revision](https://git.vanillacore.net/giga/content/src/commit/6d8d1c004988f3e0fcf72e25f5f2428286a7d883/chapter-4/chapter-4.md)
-- [Chapter 4 lab](https://git.vanillacore.net/giga/content/src/commit/6d8d1c004988f3e0fcf72e25f5f2428286a7d883/chapter-4/lab/README.md)
+- [Chapter 4 at reviewed revision](https://git.vanillacore.net/giga/content/src/commit/b56cad92b74b4335de99879415d437b97ab677cd/chapter-4/chapter-4.md)
+- [Chapter 4 lab](https://git.vanillacore.net/giga/content/src/commit/b56cad92b74b4335de99879415d437b97ab677cd/chapter-4/lab/README.md)
 
 ## Source-note rule
 

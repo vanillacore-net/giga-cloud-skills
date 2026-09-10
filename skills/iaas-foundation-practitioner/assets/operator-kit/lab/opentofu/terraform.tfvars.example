@@ -1,0 +1,16 @@
+# Copy this file to terraform.tfvars. These are the Chapter 3 reference-lab
+# values. Replace them with discovered and approved values in another cloud.
+# Do not commit terraform.tfvars, clouds.yaml, generated state, or plan files.
+
+openstack_cloud          = "my-cloud"
+vm_name                  = "web-01"
+security_group_name      = "web-https"
+image_id                 = "369e53e4-081a-4b74-94af-1b9f5dffda75"
+flavor_name              = "m1.tiny"
+vm_network_name          = "demo-network"
+floating_ip_network_name = "external-network"
+approved_https_cidr      = "198.51.100.0/24"
+volume_type              = "__DEFAULT__"
+volume_size_gib           = 1
+compute_availability_zone = "nova"
+volume_availability_zone  = "nova"

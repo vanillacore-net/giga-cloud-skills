@@ -67,6 +67,17 @@ iaas_technical_baseline:
   stable_resource_identifiers: []
   cross_service_validation: []
   cleanup_or_retention_decision:
+  operator_execution:
+    kit_source:
+    operation:
+    working_directory:
+    execution_level: explained | prepared | offline-validated | live-executed
+    change_approval:
+    checks: []
+    changed_resource_ids: []
+    evidence: []
+    rollback_or_cleanup:
+    status: passed | failed | blocked | unverified
   static_validation: []
   live_validation: []
   assumptions_and_deviations: []
@@ -89,10 +100,25 @@ cluster_runtime_baseline_record:
   cluster_api_conditions:
   machine_server_node_identifier_chain: []
   cni_and_node_readiness:
+  reconciled_cluster_addons:
+    cert_manager:
+    private_contour_envoy_ingress:
+    storage_smoke_baseline:
   edge_to_spoke_path_test:
   gitops_scope_and_revision:
   lifecycle_change_evidence: []
   cleanup_or_retention_decision:
+  operator_execution:
+    kit_source:
+    operation:
+    working_directory:
+    execution_level: explained | prepared | offline-validated | live-executed
+    change_approval:
+    checks: []
+    changed_resource_ids: []
+    evidence: []
+    rollback_or_cleanup:
+    status: passed | failed | blocked | unverified
   static_validation: []
   live_validation: []
   assumptions_and_deviations: []

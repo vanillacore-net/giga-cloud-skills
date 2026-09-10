@@ -1,7 +1,7 @@
 ---
 name: kubernetes-cluster-lifecycle-practitioner
-description: Use when teaching or reviewing Kubernetes lifecycle on IaaS.
-version: 0.1.0
+description: Use when learning or operating Kubernetes lifecycle on IaaS.
+version: 0.2.0
 author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
@@ -21,6 +21,7 @@ Use this for Chapter 4 learning, implementation coaching, architecture challenge
 
 - Explain Kubernetes, Cluster API, CAPO, management clusters, workload clusters, and provider reconciliation.
 - Help a learner turn an IaaS baseline into a cluster runtime baseline.
+- Prepare, execute, validate, scale, upgrade, reconcile, or clean up the packaged cluster-lifecycle workflow.
 - Explore a bounded edge and workload-spoke design, private API reachability, scaling, upgrades, GitOps, and cleanup.
 - Challenge cluster ownership, network ranges, load-balancer claims, machine images, or evidence.
 - Review Kubernetes, CAPI, CAPO, Argo CD, shell, Ansible, or OpenTofu material for syntax and scope.
@@ -31,9 +32,13 @@ Do not use it to claim that a cluster is a complete shared application platform 
 
 ```yaml
 mode: ask | learn | work | challenge | review
+operation: assess | prepare | provision | validate | maintain | cleanup
+execution: explain | prepare | execute
 iaas_technical_baseline:
 question:
 artifact:
+skill_directory:
+working_directory:
 implementation:
   infrastructure_provider:
   kubernetes_version:
@@ -41,6 +46,7 @@ implementation:
   provider_version:
 local_inputs:
 performed_checks:
+change_approval:
 ```
 
 ## Architecture model
@@ -55,7 +61,7 @@ Teach the lifecycle chain in this order:
 6. Management API traffic and application data traffic are separate paths and need separate evidence.
 7. GitOps can own reviewed cluster and workload declarations, but it does not replace provider reconciliation or prove application health.
 
-Read `references/kubernetes-iaas-map.md`, `references/cluster-lifecycle-exercises.md`, and `references/technical-validation.md` for deeper work.
+Read `references/kubernetes-iaas-map.md`, `references/cluster-lifecycle-exercises.md`, `references/technical-validation.md`, and `references/operator-runbook.md` for deeper work. The portable practical kit and its exact source record are under `assets/operator-kit/`.
 
 ## Procedure
 
@@ -65,11 +71,21 @@ Read `references/kubernetes-iaas-map.md`, `references/cluster-lifecycle-exercise
 4. Establish the machine-image contract. Kubernetes version, operating system, container runtime, kubeadm dependencies, cloud-init behaviour, and provider expectations must be compatible.
 5. Establish private management-cluster reachability to every child Kubernetes API before claiming lifecycle control.
 6. Distinguish three load-balancing responsibilities: Kubernetes API endpoint, application `Service` integration with an IaaS load balancer, and an optional dedicated edge cluster. Do not collapse them into one resource.
-7. Trace ownership and evidence from CAPI Cluster through Machines, IaaS servers, provider IDs, and child Nodes.
-8. Scale through the owning declaration. Upgrade with a reviewed Kubernetes-version and machine-image pair, pre-upgrade convergence, server-side validation, diff, explicit approval, rollout observation, and workload availability checks.
-9. For GitOps, bind every result to an exact repository URL and revision. Separate Argo CD sync and health from CAPI conditions, Node readiness, IaaS state, and workload behaviour.
-10. Clean up by stopping higher-level reconciliation first, preserving identifiers, deleting the owning Cluster declaration, waiting with explicit failure states, and proving IaaS absence by ID.
-11. Produce the `cluster_runtime_baseline_record` using the output schema below.
+7. Establish cert-manager and a private Contour/Envoy ingress baseline in each child cluster. The application path is `public edge -> private workload-cluster Envoy -> Service -> Pods`; do not expose the workload Envoy directly.
+8. Treat the Local Path Provisioner and disposable PersistentVolumeClaim exercise as a bounded storage smoke baseline, not production storage acceptance.
+9. Trace ownership and evidence from CAPI Cluster through Machines, IaaS servers, provider IDs, child Nodes and reconciled add-ons.
+10. Scale through the owning declaration. Upgrade with a reviewed Kubernetes-version and machine-image pair, pre-upgrade convergence, server-side validation, diff, explicit approval, rollout observation, and workload availability checks.
+11. For GitOps, bind every result to an exact repository URL and revision. Separate Argo CD sync and health from CAPI conditions, Node readiness, IaaS state, add-on readiness and workload behaviour.
+12. Clean up by stopping higher-level reconciliation first, preserving identifiers, deleting the owning Cluster declaration, waiting with explicit failure states, and proving IaaS absence by ID.
+13. In `work` mode with an operation, use `references/operator-runbook.md`. Copy `assets/operator-kit/` to a protected working directory, run its offline validation, and never write local contracts, credentials, rendered live manifests or evidence into the installed skill.
+14. Execute a live change only when `execution: execute` is explicit and the runbook's operation-specific gate is complete. Use the host's real tools, capture real output, and stop rather than inventing controller or cloud results.
+15. Produce the `cluster_runtime_baseline_record` using the output schema below.
+
+## Operator workflow
+
+The practical path is `Assess -> Prepare -> Provision -> Validate -> Maintain or Cleanup`. `assess`, `prepare`, offline checks and read-only discovery are non-mutating. Provisioning, scaling, upgrades, add-on changes, GitOps changes and cleanup require exact cloud and Kubernetes targets, matching version schemas, reviewed plans or diffs, explicit operation approval, bounded waits and owner-aware recovery.
+
+This skill establishes and maintains the Chapter 4 cluster-lifecycle layer, including the reviewed private Contour/Envoy, cert-manager and storage-smoke baselines. A highly available management plane, production public-edge and TLS configuration, production storage acceptance, backup and recovery, and repository-specific authentication remain explicit platform-operations gaps rather than implied results.
 
 ## Learning modes
 
@@ -89,7 +105,7 @@ Guide **Spec -> Run -> Validation. Repeat.** Keep every environment input explic
 
 ### Challenge
 
-Attack provider/version compatibility, image readiness, context selection, CIDR overlap, management API routing, load-balancer ambiguity, controller ownership, unsafe scaling or upgrades, Git revision drift, and cleanup order.
+Attack provider/version compatibility, image readiness, context selection, CIDR overlap, management API routing, load-balancer ambiguity, exposed workload ingress, missing per-cluster certificates, overstated storage evidence, controller ownership, unsafe scaling or upgrades, Git revision drift, and cleanup order.
 
 ### Review
 
@@ -111,10 +127,25 @@ cluster_runtime_baseline_record:
   cluster_api_conditions:
   machine_server_node_identifier_chain: []
   cni_and_node_readiness:
+  reconciled_cluster_addons:
+    cert_manager:
+    private_contour_envoy_ingress:
+    storage_smoke_baseline:
   edge_to_spoke_path_test:
   gitops_scope_and_revision:
   lifecycle_change_evidence: []
   cleanup_or_retention_decision:
+  operator_execution:
+    kit_source:
+    operation:
+    working_directory:
+    execution_level: explained | prepared | offline-validated | live-executed
+    change_approval:
+    checks: []
+    changed_resource_ids: []
+    evidence: []
+    rollback_or_cleanup:
+    status: passed | failed | blocked | unverified
   static_validation: []
   live_validation: []
   assumptions_and_deviations: []
@@ -134,7 +165,7 @@ Every condition, identity link, path test, and lifecycle result must carry its e
 
 ## Sources
 
-Use the [reviewed Chapter 4 revision](https://git.vanillacore.net/giga/content/src/commit/6d8d1c004988f3e0fcf72e25f5f2428286a7d883/chapter-4/chapter-4.md) and its linked lab. For version-sensitive syntax and behaviour, prefer current named upstream sources: Kubernetes, Cluster API, CAPO, Argo CD, OpenTofu, Ansible, and the exact CRD or provider schemas used by the artifact.
+Use the commit-pinned portable kit under `assets/operator-kit/`, sourced from the reviewed lab, and the [reviewed Chapter 4 revision](https://git.vanillacore.net/giga/content/src/commit/b56cad92b74b4335de99879415d437b97ab677cd/chapter-4/chapter-4.md) and its linked lab. For version-sensitive syntax and behaviour, prefer current named upstream sources: Kubernetes, Cluster API, CAPO, Argo CD, OpenTofu, Ansible, and the exact CRD or provider schemas used by the artifact.
 
 ## Pitfalls
 

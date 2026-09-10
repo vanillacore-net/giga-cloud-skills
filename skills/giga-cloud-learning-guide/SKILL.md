@@ -1,7 +1,7 @@
 ---
 name: giga-cloud-learning-guide
-description: Use when routing learners across GIGA Cloud Chapters 1-4.
-version: 0.1.0
+description: Route GIGA Cloud Chapter 1-4 learning and operations.
+version: 0.2.0
 author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
@@ -29,6 +29,7 @@ Use it when a learner wants to:
 - ask a question spanning more than one chapter;
 - learn a concept through a public-service case;
 - build the Chapter 1 to 4 artifacts in sequence;
+- prepare or execute the packaged Chapter 3 and 4 operator workflows;
 - challenge an architecture, assumption, or claimed benefit;
 - review an artifact for architectural, content, syntax, and evidence quality.
 
@@ -39,6 +40,10 @@ Use a focused skill directly when the question clearly belongs to one chapter an
 ```yaml
 mode: ask | learn | work | challenge | review
 chapter: auto | 1 | 2 | 3 | 4
+operation: assess | prepare | provision | validate | maintain | cleanup
+execution: explain | prepare | execute
+working_directory:
+change_approval:
 case:
   service_outcome:
   supplied_facts:
@@ -70,8 +75,9 @@ Read `references/chapter-contracts.md` when the request crosses a chapter bounda
 5. If the focused skill is unavailable, return `focused_skill_required` with its name and the complete handoff. Do not imitate an unavailable specialist with invented detail.
 6. Validate each returned artifact against the chapter contract, `case_id`, required IDs, and allowed status values. Preserve unknowns and reject prose aliases that break the handoff.
 7. Reconcile specialist findings. When two findings conflict, return a reconciliation finding or decision gap with both bases. Do not silently choose one.
-8. Apply the selected mode contract below. In challenge mode without a learner attempt, pose the challenge and stop before the model correction.
-9. Run the four-axis quality gate, then produce the integrated `architecture_learning_record` below with one bounded next action.
+8. For Chapter 3 or 4 `work` requests, preserve `operation`, `execution`, `working_directory`, `change_approval`, and the prior handoff when activating the practitioner skill. Require its portable operator kit for practical execution.
+9. Apply the selected mode contract below. In challenge mode without a learner attempt, pose the challenge and stop before the model correction.
+10. Run the four-axis quality gate, then produce the integrated `architecture_learning_record` below with one bounded next action.
 
 ## Integrated output
 
@@ -84,6 +90,8 @@ architecture_learning_record:
   primary_skill:
   supporting_skills: []
   learner_goal:
+  execution_scope: guidance | offline-validation | live-change
+  operator_execution:
   direct_answer_or_exercise:
   transferable_concepts: []
   reference_implementation_mapping: []
@@ -124,6 +132,8 @@ Teach one concept because the learner needs it for the next decision. Use the cu
 
 Guide the learner through **Spec -> Run -> Validation. Repeat.** Produce or update the chapter handoff using supplied facts. Keep unknowns visible, assign evidence owners where known, and stop before a decision-blocking gap would require invention.
 
+For Chapter 3 and 4 practical work, route `assess`, `prepare`, `provision`, `validate`, `maintain`, or `cleanup` to the matching practitioner. Practical execution uses a protected working copy of its `assets/operator-kit/`. Live changes require `execution: execute`, the focused skill's complete operation gate and explicit action approval. Return the real `operator_execution` record; never substitute plausible output when tools, credentials, targets or approval are absent.
+
 ### Challenge
 
 Test the strongest claim in the artifact. Look for hidden dependencies, confused responsibility and accountability, shared failure domains, false portability or sovereignty claims, product names used as proof, absent recovery evidence, and claims that exceed the performed validation. Return the counter-case that would break the claim and the evidence needed to keep it.
@@ -146,6 +156,8 @@ Return the review envelope from `references/chapter-contracts.md`. A finding mus
 - Do not hide contradictory chapter sources. Follow the source-note rule in `references/chapter-contracts.md`.
 - Do not cite an internal note, inaccessible path, or anonymous authority.
 - Do not claim a command, manifest, or architecture was validated unless the stated check actually ran.
+- Do not run or modify the checked-in operator kit in place. Use a protected working copy and preserve its source record.
+- Do not treat a request to establish the Chapter 4 cluster layer as proof that Chapter 5 platform operations are complete.
 
 ## Verification
 

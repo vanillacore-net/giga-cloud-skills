@@ -26,7 +26,7 @@ BANNED_PATTERNS = {
     "private vault path": r"AI_Knowledge/|\.pi/secrets|forgejo-vanillacore",
     "private Notion path": r"notion\.com/p/",
     "machine-local home path": r"/home/[A-Za-z0-9._-]+/",
-    "credential assignment": r"(?im)^\s*(password|token|secret|private_key|auth_url)\s*[:=]\s*[^<\s][^\n]*$",
+    "credential assignment": r"(?im)^[ \t]*(password|token|secret|private_key|auth_url)[ \t]*[:=][ \t]*[^<\s][^\n]*$",
 }
 SCAN_SUFFIXES = {".md", ".json", ".yaml", ".yml", ".py"}
 errors: list[str] = []

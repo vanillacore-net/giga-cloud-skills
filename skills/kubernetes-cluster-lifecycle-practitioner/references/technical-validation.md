@@ -53,4 +53,4 @@ Default to explanation and offline review. Before a state change, require an app
 
 ## Source tensions
 
-Do not repeat a known-broken helper invocation as executable. In the [reviewed Chapter 4 lab](https://git.vanillacore.net/giga/content/src/commit/6d8d1c004988f3e0fcf72e25f5f2428286a7d883/chapter-4/lab/README.md), a walkthrough documented a load-balancer cleanup route that its helper rejected. Also keep seed and child CNI version pins role-specific, and qualify the Chapter 4 versus Chapter 5 GitOps boundary.
+Do not reintroduce a helper invocation that its implementation rejects. The earlier [`6d8d1c0…` Chapter 4 lab](https://git.vanillacore.net/giga/content/src/commit/6d8d1c004988f3e0fcf72e25f5f2428286a7d883/chapter-4/lab/README.md) contained that mismatch in the load-balancer cleanup route. The [current reviewed operator-kit source](https://git.vanillacore.net/giga/content/src/commit/b56cad92b74b4335de99879415d437b97ab677cd/chapter-4/lab/README.md) corrects the path and tests its ownership-aware cleanup. Also keep seed and child CNI version pins role-specific, and qualify the Chapter 4 versus Chapter 5 GitOps boundary.

@@ -1,0 +1,22 @@
+environment-contract.yaml
+hub-spoke-contract.yaml
+lab-session.env
+rendered/
+*.kubeconfig
+clouds.yaml
+cacert
+artifacts/
+evidence/*.json
+!evidence/resource-ids.example.json
+__pycache__/
+
+# OpenTofu working data and local inputs
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfplan
+**/terraform.tfvars
+
+# Ansible live inventory and reviewed local variables
+foundation/ansible/inventory.yaml
+foundation/ansible/group_vars/all.yaml

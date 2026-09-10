@@ -1,7 +1,7 @@
 ---
 name: iaas-foundation-practitioner
-description: Use when teaching or reviewing an IaaS technical baseline.
-version: 0.1.0
+description: Use when learning or operating an IaaS technical baseline.
+version: 0.2.0
 author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
@@ -21,6 +21,7 @@ Use this for Chapter 3 learning, implementation coaching, architecture challenge
 
 - Explain how identity, images, compute, networking, storage, quota, and placement form one IaaS request.
 - Help a learner prepare a bounded IaaS baseline from a Chapter 2 architecture brief.
+- Prepare, execute, validate, maintain, or clean up the packaged OpenStack tenant-resource workflow.
 - Compare a dashboard, CLI, and declarative path without mixing their session state.
 - Challenge an OpenStack design or claimed validation result.
 - Review OpenStack commands, YAML, shell, or OpenTofu for syntax and evidence limits.
@@ -31,13 +32,18 @@ Do not use it to design Kubernetes cluster lifecycle or a complete application p
 
 ```yaml
 mode: ask | learn | work | challenge | review
+operation: assess | prepare | provision | validate | maintain | cleanup
+execution: explain | prepare | execute
 architecture_brief:
 platform: generic-iaas | openstack | other
 interface: concept | horizon | openstackclient | opentofu
 question:
 artifact:
+skill_directory:
+working_directory:
 local_inputs:
 performed_checks:
+change_approval:
 ```
 
 ## Capability model
@@ -53,7 +59,7 @@ Start from the request rather than a product inventory:
 
 For OpenStack, map those capabilities to Keystone, Glance, Nova with Placement, Neutron, and Cinder. Horizon and OpenStackClient are alternative interfaces to the service APIs. OpenTofu declares intent through the OpenStack provider and keeps generated state outside Git.
 
-Read `references/openstack-iaas-map.md`, `references/iaas-exercises.md`, and `references/technical-validation.md` for deeper work.
+Read `references/openstack-iaas-map.md`, `references/iaas-exercises.md`, `references/technical-validation.md`, and `references/operator-runbook.md` for deeper work. The portable practical kit and its exact source record are under `assets/operator-kit/`.
 
 ## Procedure
 
@@ -64,7 +70,15 @@ Read `references/openstack-iaas-map.md`, `references/iaas-exercises.md`, and `re
 5. Build the resource chain with stable identifiers. Names help people navigate; IDs establish exact server-port-floating-IP-volume relationships.
 6. Validate each layer with the service that owns it. A server status does not prove networking, attached storage, login, an HTTPS service, or public-service recovery.
 7. Treat cleanup as an independently executable request. Capture identifiers before deletion, preserve retained data deliberately, stop on failed detach or timeout, and prove absence by ID.
-8. Produce the `iaas_technical_baseline` using the output schema below.
+8. In `work` mode with an operation, use `references/operator-runbook.md`. Copy `assets/operator-kit/` to a protected working directory, run its offline validation, and never write local values or evidence into the installed skill.
+9. Execute a live change only when `execution: execute` is explicit and the runbook's operation-specific gate is complete. Use the host's real tools, preserve real output, and stop rather than inventing a result.
+10. Produce the `iaas_technical_baseline` using the output schema below.
+
+## Operator workflow
+
+The practical path is `Assess -> Prepare -> Provision -> Validate -> Maintain or Cleanup`. `assess`, `prepare`, and static validation are non-mutating. `provision`, mutating maintenance, and `cleanup` require an approved project, protected credentials, supplied environment values, a reviewed request or plan, explicit operation approval, bounded waits, and a predeclared cleanup or retention decision.
+
+Chapter 3 operates tenant resources in an existing OpenStack project. It does not install, upgrade, or repair the OpenStack control plane. If the request crosses that boundary, return it as an unsupported platform-operations requirement.
 
 ## Learning modes
 
@@ -108,6 +122,17 @@ iaas_technical_baseline:
   stable_resource_identifiers: []
   cross_service_validation: []
   cleanup_or_retention_decision:
+  operator_execution:
+    kit_source:
+    operation:
+    working_directory:
+    execution_level: explained | prepared | offline-validated | live-executed
+    change_approval:
+    checks: []
+    changed_resource_ids: []
+    evidence: []
+    rollback_or_cleanup:
+    status: passed | failed | blocked | unverified
   static_validation: []
   live_validation: []
   assumptions_and_deviations: []
@@ -129,7 +154,7 @@ If a required tool, schema, credential, or environment is absent, mark the corre
 
 ## Sources
 
-Use the [reviewed Chapter 3 revision](https://git.vanillacore.net/giga/content/src/commit/65055f17aaf13cf1944e2f4c4e1180dd3b94478a/chapter-3/chapter-3.md) and its linked lab. For version-sensitive syntax or API semantics, prefer current named upstream sources: OpenStack service and client documentation, the OpenTofu language documentation, and the OpenStack provider schema used by the artifact.
+Use the commit-pinned portable kit under `assets/operator-kit/`, sourced from the reviewed lab, and the [reviewed Chapter 3 revision](https://git.vanillacore.net/giga/content/src/commit/65055f17aaf13cf1944e2f4c4e1180dd3b94478a/chapter-3/chapter-3.md) and its linked lab. For version-sensitive syntax or API semantics, prefer current named upstream sources: OpenStack service and client documentation, the OpenTofu language documentation, and the OpenStack provider schema used by the artifact.
 
 ## Pitfalls
 

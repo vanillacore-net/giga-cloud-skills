@@ -1,5 +1,5 @@
 interface:
   display_name: GIGA Cloud Learning Guide
-  short_description: Learn, work, challenge, and review Chapters 1 to 4.
+  short_description: Learn, operate, challenge, and review Chapters 1 to 4.
 policy:
   allow_implicit_invocation: true

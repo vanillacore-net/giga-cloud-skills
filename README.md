@@ -1,6 +1,6 @@
 # GIGA Cloud Learning Skills
 
-This repository packages nine public-safe agent skills for Claude Code, Codex, and direct skill installation. Learners can ask questions, learn concepts, build bounded artifacts, challenge claims, and review architecture or syntax across GIGA Cloud Chapters 1 to 4.
+This repository packages nine public-safe agent skills for Claude Code, Codex, and direct skill installation. Learners can ask questions, learn concepts, build bounded artifacts, challenge claims, review architecture or syntax, and operate the Chapter 3 and 4 practical paths from protected working copies.
 
 ## Skill system
 
@@ -15,8 +15,8 @@ This repository packages nine public-safe agent skills for Claude Code, Codex, a
 | Chapters 1 to 4 | `cloud-decision-gap-discovery` | Prioritised evidence gaps and stop conditions |
 | Chapter 1 | `cloud-decision-matrix-steward` | A reviewable service-arrangement decision record |
 | Chapter 2 | `public-service-platform-architecture` | A foundation-readiness architecture brief |
-| Chapter 3 | `iaas-foundation-practitioner` | An IaaS technical baseline with honest validation status |
-| Chapter 4 | `kubernetes-cluster-lifecycle-practitioner` | A Kubernetes cluster-runtime baseline on IaaS |
+| Chapter 3 | `iaas-foundation-practitioner` | An IaaS baseline plus a portable OpenStack tenant-resource operator kit |
+| Chapter 4 | `kubernetes-cluster-lifecycle-practitioner` | A cluster-runtime baseline plus a portable CAPI/CAPO operator kit |
 
 The package intentionally uses nine coherent skills rather than separate skills for every OpenStack service, client interface, Kubernetes controller, or lifecycle operation.
 
@@ -29,6 +29,14 @@ The package intentionally uses nine coherent skills rather than separate skills 
 - `review`: return independent architecture, content, syntax, and evidence verdicts with repair actions.
 
 The machine-readable route and coverage contract is `learning-contract.json`. Human-readable handoffs are in `docs/handoff-contracts.md`. Reviewed chapter revisions and known source tensions are in `docs/source-and-scope-map.md`.
+
+## Practical operator paths
+
+The Chapter 3 and Chapter 4 practitioner skills include commit-pinned operator kits under their local `assets/operator-kit/` directories. In `work` mode they support `assess`, `prepare`, `provision`, `validate`, `maintain`, and `cleanup` with `explain`, `prepare`, or `execute` intent.
+
+A practical run always copies the kit to a protected working directory. Offline validation runs before environment values are accepted. Live changes require an approved target, protected credentials, supplied local inputs, a reviewed plan or diff, explicit action approval, bounded validation and owner-aware cleanup. The skill returns an `operator_execution` record with real checks and evidence status.
+
+Chapter 3 operates resources inside an existing OpenStack project. Chapter 4 establishes and maintains the Kubernetes cluster-lifecycle layer on that IaaS foundation, including the reviewed per-cluster cert-manager and private Contour/Envoy ingress declarations, bounded storage smoke test, scaling, upgrades, Argo CD path and owner-aware cleanup. Neither skill silently expands into OpenStack control-plane installation or the complete Chapter 5 production platform.
 
 ## Platform integration
 
@@ -45,6 +53,7 @@ The repository contains distilled, public-safe learning workflows, contracts, an
 ```bash
 python3 scripts/validate_skills.py
 python3 scripts/test_learning_paths.py
+python3 scripts/test_operator_kits.py
 ```
 
-The first command validates package syntax, manifests, frontmatter, references, relationships, and public-safety markers. The second runs deterministic routing and Chapter 1 to 4 coverage tests. These checks validate the package, not a live cloud or cluster.
+The first command validates package syntax, manifests, frontmatter, references, relationships, and public-safety markers. The second runs deterministic routing and Chapter 1 to 4 coverage tests. The third verifies checksums, portable paths, script and data syntax, and both operator kits through their offline suites. These checks validate the package and its offline behaviour, not a live cloud or cluster.

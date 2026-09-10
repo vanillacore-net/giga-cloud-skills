@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage-smoke
+  labels:
+    lab.example.invalid/managed-by: chapter4-capi-openstack-lab
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-path-smoke
+  namespace: storage-smoke
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 64Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: local-path-smoke
+  namespace: storage-smoke
+spec:
+  restartPolicy: Never
+  containers:
+    - name: writer-reader
+      image: docker.io/library/busybox:1.37.0@sha256:9db7b59979c38555a39def84a31fb98b5296952f9e3afd4f6f11f05b07adfab0
+      command:
+        - /bin/sh
+        - -ec
+        - >-
+          printf 'chapter-4-storage-ready\n' > /data/probe &&
+          grep -qx 'chapter-4-storage-ready' /data/probe &&
+          cat /data/probe
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: local-path-smoke

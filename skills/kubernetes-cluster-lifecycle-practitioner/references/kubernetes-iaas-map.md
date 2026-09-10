@@ -43,4 +43,4 @@ Change an object through the declaration and controller that owns it. Scale or u
 
 ## Boundary
 
-A ready cluster does not by itself prove a complete shared platform, service reachability, backup, recovery, observability, access policy, or production operation. The [reviewed Chapter 4 revision](https://git.vanillacore.net/giga/content/src/commit/6d8d1c004988f3e0fcf72e25f5f2428286a7d883/chapter-4/chapter-4.md) demonstrates bounded cluster lifecycle and Argo CD reconciliation. Its broader Chapter 5 GitOps boundary remains qualified because the reviewed scope record and executable material differ.
+A ready cluster does not by itself prove a complete shared platform, service reachability, backup, recovery, observability, access policy, or production operation. The [reviewed Chapter 4 revision](https://git.vanillacore.net/giga/content/src/commit/b56cad92b74b4335de99879415d437b97ab677cd/chapter-4/chapter-4.md) demonstrates bounded cluster lifecycle and Argo CD reconciliation. Its broader Chapter 5 GitOps boundary remains qualified because the reviewed scope record and executable material differ.

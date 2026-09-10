@@ -1,5 +1,5 @@
 interface:
   display_name: Kubernetes Cluster Lifecycle Practitioner
-  short_description: Learn and review Kubernetes cluster lifecycle on IaaS.
+  short_description: Learn, operate, and review Kubernetes lifecycle on IaaS.
 policy:
   allow_implicit_invocation: true

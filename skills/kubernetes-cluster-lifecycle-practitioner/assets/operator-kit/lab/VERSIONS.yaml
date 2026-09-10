@@ -1,0 +1,30 @@
+cluster_api: v1.13.4
+cluster_api_contract: v1beta2
+cert_manager: v1.20.3
+cert_manager_manifest_sha256: 7ee74ba06845213e96d8ceaff3d20dd51e682765c1418eddda4e8780ba082261
+contour:
+  version: v1.33.7
+  manifest_sha256: 8caa9d42a641fdabea6b59e80e11260a21784448aaf7e6a20716c8fa7b704e78
+clusterctl:
+  version: v1.13.4
+  linux_amd64_sha256: 17a7a98e62d423b92981cd5fb005e35ebb76fa0a21e32046336627c7521a1049
+openstack_provider: v0.14.6
+openstack_provider_contract: v1beta1
+openstack_provider_components_sha256: 123423f8ef8657f101cd086171f517e862b3fc04fa6a1f2f8e9fda7c1d9efac4
+openstack_resource_controller:
+  version: v2.6.0
+  install_sha256: affe57ece8c81001d4dacd35fe3bd5bf35662ed6b5c4b1da59f334c685bba109
+kubernetes: v1.36.3
+calico:
+  version: v3.32.1
+  operator_manifest_sha256: f18e073794207d372606bc3ea6f8fd73972f86d6828f4ba666dfe0d4aa8ab07f
+path_probe:
+  destination_image: registry.k8s.io/e2e-test-images/agnhost:2.53
+  source_image: curlimages/curl:8.12.1
+argocd:
+  version: v3.5.2
+  install_manifest_sha256: 9a87f2b3e14c278f12501eb0ef5c3955b27cf05370ca425381c6a908cf85a5c5
+  linux_amd64_sha256: d87058531d2aed735100636dd7664bdd49b862588993b571385c49494f9832c1
+local_path_provisioner:
+  version: v0.0.37
+  manifest_sha256: 1f8cc3be2e5a3898bfc40755bb717bf4f53ebb37775fb354587c71bb6781eda4
