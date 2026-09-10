@@ -1,0 +1,18 @@
+apiVersion: {{ kubeadm_config_api_version }}
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: {{ management_api_address }}
+  bindPort: 6443
+nodeRegistration:
+  criSocket: unix:///run/containerd/containerd.sock
+---
+apiVersion: {{ kubeadm_config_api_version }}
+kind: ClusterConfiguration
+kubernetesVersion: {{ kubernetes_version }}
+controlPlaneEndpoint: "{{ management_api_address }}:6443"
+networking:
+  podSubnet: {{ management_pod_cidr }}
+  serviceSubnet: {{ management_service_cidr }}
+apiServer:
+  certSANs:
+    - {{ management_api_address }}

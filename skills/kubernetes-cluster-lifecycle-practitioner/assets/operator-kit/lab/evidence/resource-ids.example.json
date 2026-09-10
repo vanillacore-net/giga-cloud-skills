@@ -1,0 +1,9 @@
+{
+  "cluster": "service-a",
+  "namespace": "service-a",
+  "captured_before_deletion": false,
+  "server_ids": [],
+  "port_ids": [],
+  "volume_ids": [],
+  "loadbalancer_ids": []
+}

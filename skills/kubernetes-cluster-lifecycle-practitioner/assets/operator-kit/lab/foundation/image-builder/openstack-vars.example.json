@@ -1,0 +1,14 @@
+{
+  "source_image": "REPLACE_WITH_APPROVED_UBUNTU_2404_IMAGE_UUID",
+  "networks": "REPLACE_WITH_BUILD_NETWORK_UUID",
+  "flavor": "REPLACE_WITH_BUILD_FLAVOR_NAME",
+  "floating_ip_network": "REPLACE_WITH_PROVIDER_NETWORK_NAME",
+  "image_name": "capi-ubuntu-2404-kube-v1.36.3",
+  "image_visibility": "private",
+  "image_disk_format": "raw",
+  "volume_type": "",
+  "ssh_username": "ubuntu",
+  "kubernetes_semver": "v1.36.3",
+  "kubernetes_series": "v1.36",
+  "kubernetes_deb_version": "1.36.3-1.1"
+}

@@ -1,0 +1,88 @@
+{
+  "cases": [
+    {
+      "id": "chapter-1-three-axis-choice",
+      "prompt": "Compare the operating arrangement, placement choice, managed service layer, operating model, and portability and exit conditions for this service.",
+      "chapter": "1",
+      "output": "service_arrangement_decision_record",
+      "required_challenge_checks": [
+        "three_axes",
+        "label_claims",
+        "no_numeric_winner"
+      ]
+    },
+    {
+      "id": "chapter-2-service-recovery",
+      "prompt": "Map service journey dependencies, shared failure domain, component recovery, and foundation readiness before choosing platform responsibility.",
+      "chapter": "2",
+      "output": "foundation_readiness_architecture_brief",
+      "required_challenge_checks": [
+        "component_health_is_not_service_recovery",
+        "layer_separation",
+        "shared_failure"
+      ]
+    },
+    {
+      "id": "chapter-3-resource-chain",
+      "prompt": "Review the IaaS resource chain with an OpenStack server port, persistent volume, OpenStackClient evidence, and stable identifiers.",
+      "chapter": "3",
+      "output": "iaas_technical_baseline",
+      "required_challenge_checks": [
+        "quota_is_not_capacity",
+        "stable_id_relationships",
+        "cleanup_and_retention"
+      ]
+    },
+    {
+      "id": "chapter-4-cluster-lifecycle",
+      "prompt": "Challenge this Kubernetes cluster lifecycle using Cluster API CAPO, a management workload cluster split, Argo CD cluster ownership, and a CAPI upgrade.",
+      "chapter": "4",
+      "output": "cluster_runtime_baseline_record",
+      "required_challenge_checks": [
+        "two_reconciliation_layers",
+        "control_and_data_paths",
+        "single_owner",
+        "owner_aware_cleanup"
+      ]
+    },
+    {
+      "id": "chapter-3-practical-provision",
+      "prompt": "Prepare to provision OpenStack project resources and validate the IaaS resource chain by stable identifiers.",
+      "chapter": "3",
+      "output": "iaas_technical_baseline",
+      "required_challenge_checks": [
+        "stable_id_relationships",
+        "cleanup_and_retention"
+      ]
+    },
+    {
+      "id": "chapter-4-practical-maintenance",
+      "prompt": "Help maintain Kubernetes cluster lifecycle through a reviewed CAPI upgrade and owner-aware cleanup.",
+      "chapter": "4",
+      "output": "cluster_runtime_baseline_record",
+      "required_challenge_checks": [
+        "version_image_pair",
+        "owner_aware_cleanup"
+      ]
+    },
+    {
+      "id": "chapter-4-private-ingress-certificates",
+      "prompt": "Validate private Contour Envoy ingress and cert-manager per cluster for the workload path.",
+      "chapter": "4",
+      "output": "cluster_runtime_baseline_record",
+      "required_challenge_checks": [
+        "private_ingress_boundary",
+        "per_cluster_certificate_owner"
+      ]
+    },
+    {
+      "id": "chapter-4-storage-smoke-boundary",
+      "prompt": "Review the storage smoke baseline without claiming production storage acceptance.",
+      "chapter": "4",
+      "output": "cluster_runtime_baseline_record",
+      "required_challenge_checks": [
+        "storage_evidence_boundary"
+      ]
+    }
+  ]
+}

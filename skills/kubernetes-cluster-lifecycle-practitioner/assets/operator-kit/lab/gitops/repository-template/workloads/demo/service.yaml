@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chapter-4-demo
+  namespace: workload-demo
+spec:
+  selector:
+    app.kubernetes.io/name: chapter-4-demo
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

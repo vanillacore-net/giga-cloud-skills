@@ -1,0 +1,344 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: capi-lab-blueprints
+  labels:
+    lab.example.invalid/managed-by: chapter4-capi-openstack-lab
+---
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: ClusterClass
+metadata:
+  name: openstack-runtime
+  namespace: capi-lab-blueprints
+spec:
+  infrastructure:
+    templateRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+      kind: OpenStackClusterTemplate
+      name: openstack-runtime-cluster
+  controlPlane:
+    templateRef:
+      apiVersion: controlplane.cluster.x-k8s.io/v1beta2
+      kind: KubeadmControlPlaneTemplate
+      name: openstack-runtime-control-plane
+    machineInfrastructure:
+      templateRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: OpenStackMachineTemplate
+        name: openstack-runtime-control-plane-machine
+  workers:
+    machineDeployments:
+      - class: general-worker
+        bootstrap:
+          templateRef:
+            apiVersion: bootstrap.cluster.x-k8s.io/v1beta2
+            kind: KubeadmConfigTemplate
+            name: openstack-runtime-worker-bootstrap
+        infrastructure:
+          templateRef:
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            kind: OpenStackMachineTemplate
+            name: openstack-runtime-worker-machine
+  variables:
+    - name: identityRef
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          required: [type, name, cloudName, region]
+          properties:
+            type:
+              type: string
+            name:
+              type: string
+            cloudName:
+              type: string
+            region:
+              type: string
+    - name: networkID
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: subnetID
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: apiVIP
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: imageID
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: controlPlaneFlavor
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: workerFlavor
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: availabilityZone
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: sshKeyName
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+    - name: securityGroupID
+      required: true
+      schema:
+        openAPIV3Schema:
+          type: string
+  patches:
+    - name: openstack-cluster-inputs
+      definitions:
+        - selector:
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            kind: OpenStackClusterTemplate
+            matchResources:
+              infrastructureCluster: true
+          jsonPatches:
+            - op: replace
+              path: /spec/template/spec/identityRef
+              valueFrom:
+                variable: identityRef
+            - op: replace
+              path: /spec/template/spec/network/id
+              valueFrom:
+                variable: networkID
+            - op: replace
+              path: /spec/template/spec/subnets
+              valueFrom:
+                template: |
+                  - id: "{{ .subnetID }}"
+            - op: replace
+              path: /spec/template/spec/apiServerFixedIP
+              valueFrom:
+                variable: apiVIP
+            - op: replace
+              path: /spec/template/spec/controlPlaneEndpoint/host
+              valueFrom:
+                variable: apiVIP
+            - op: replace
+              path: /spec/template/spec/apiServerLoadBalancer/availabilityZone
+              valueFrom:
+                variable: availabilityZone
+            - op: replace
+              path: /spec/template/spec/controlPlaneAvailabilityZones
+              valueFrom:
+                template: |
+                  - "{{ .availabilityZone }}"
+    - name: control-plane-machine-inputs
+      definitions:
+        - selector:
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            kind: OpenStackMachineTemplate
+            matchResources:
+              controlPlane: true
+          jsonPatches:
+            - op: replace
+              path: /spec/template/spec/identityRef
+              valueFrom:
+                variable: identityRef
+            - op: replace
+              path: /spec/template/spec/flavor
+              valueFrom:
+                variable: controlPlaneFlavor
+            - op: replace
+              path: /spec/template/spec/image/id
+              valueFrom:
+                variable: imageID
+            - op: replace
+              path: /spec/template/spec/sshKeyName
+              valueFrom:
+                variable: sshKeyName
+            - op: replace
+              path: /spec/template/spec/ports
+              valueFrom:
+                template: |
+                  - network:
+                      id: "{{ .networkID }}"
+                    fixedIPs:
+                      - subnet:
+                          id: "{{ .subnetID }}"
+                    securityGroups:
+                      - id: "{{ .securityGroupID }}"
+    - name: worker-machine-inputs
+      definitions:
+        - selector:
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            kind: OpenStackMachineTemplate
+            matchResources:
+              machineDeploymentClass:
+                names: [general-worker]
+          jsonPatches:
+            - op: replace
+              path: /spec/template/spec/identityRef
+              valueFrom:
+                variable: identityRef
+            - op: replace
+              path: /spec/template/spec/flavor
+              valueFrom:
+                variable: workerFlavor
+            - op: replace
+              path: /spec/template/spec/image/id
+              valueFrom:
+                variable: imageID
+            - op: replace
+              path: /spec/template/spec/sshKeyName
+              valueFrom:
+                variable: sshKeyName
+            - op: replace
+              path: /spec/template/spec/ports
+              valueFrom:
+                template: |
+                  - network:
+                      id: "{{ .networkID }}"
+                    fixedIPs:
+                      - subnet:
+                          id: "{{ .subnetID }}"
+                    securityGroups:
+                      - id: "{{ .securityGroupID }}"
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: OpenStackClusterTemplate
+metadata:
+  name: openstack-runtime-cluster
+  namespace: capi-lab-blueprints
+spec:
+  template:
+    spec:
+      identityRef:
+        type: Secret
+        name: placeholder
+        cloudName: openstack
+        region: RegionOne
+      network:
+        id: 00000000-0000-0000-0000-000000000100
+      subnets:
+        - id: 00000000-0000-0000-0000-000000000100
+      disableAPIServerFloatingIP: true
+      disableExternalNetwork: true
+      apiServerLoadBalancer:
+        enabled: true
+        availabilityZone: nova
+      controlPlaneAvailabilityZones:
+        - nova
+      apiServerFixedIP: 192.0.2.10
+      apiServerPort: 6443
+      controlPlaneEndpoint:
+        host: 192.0.2.10
+        port: 6443
+      managedSecurityGroups:
+        allowAllInClusterTraffic: true
+---
+apiVersion: controlplane.cluster.x-k8s.io/v1beta2
+kind: KubeadmControlPlaneTemplate
+metadata:
+  name: openstack-runtime-control-plane
+  namespace: capi-lab-blueprints
+spec:
+  template:
+    spec:
+      kubeadmConfigSpec:
+        clusterConfiguration:
+          controllerManager:
+            extraArgs:
+              - name: cloud-provider
+                value: external
+        initConfiguration:
+          nodeRegistration:
+            name: "{{ v1.local_hostname }}"
+            kubeletExtraArgs:
+              - name: cloud-provider
+                value: external
+              - name: provider-id
+                value: "openstack:///{{ v1.instance_id }}"
+        joinConfiguration:
+          nodeRegistration:
+            name: "{{ v1.local_hostname }}"
+            kubeletExtraArgs:
+              - name: cloud-provider
+                value: external
+              - name: provider-id
+                value: "openstack:///{{ v1.instance_id }}"
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: OpenStackMachineTemplate
+metadata:
+  name: openstack-runtime-control-plane-machine
+  namespace: capi-lab-blueprints
+spec:
+  template:
+    spec:
+      identityRef:
+        type: Secret
+        name: placeholder
+        cloudName: openstack
+        region: RegionOne
+      flavor: placeholder
+      image:
+        id: 00000000-0000-0000-0000-000000000100
+      sshKeyName: placeholder
+      ports:
+        - network:
+            id: 00000000-0000-0000-0000-000000000100
+          fixedIPs:
+            - subnet:
+                id: 00000000-0000-0000-0000-000000000100
+          securityGroups:
+            - id: 00000000-0000-0000-0000-000000000100
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: OpenStackMachineTemplate
+metadata:
+  name: openstack-runtime-worker-machine
+  namespace: capi-lab-blueprints
+spec:
+  template:
+    spec:
+      identityRef:
+        type: Secret
+        name: placeholder
+        cloudName: openstack
+        region: RegionOne
+      flavor: placeholder
+      image:
+        id: 00000000-0000-0000-0000-000000000100
+      sshKeyName: placeholder
+      ports:
+        - network:
+            id: 00000000-0000-0000-0000-000000000100
+          fixedIPs:
+            - subnet:
+                id: 00000000-0000-0000-0000-000000000100
+          securityGroups:
+            - id: 00000000-0000-0000-0000-000000000100
+---
+apiVersion: bootstrap.cluster.x-k8s.io/v1beta2
+kind: KubeadmConfigTemplate
+metadata:
+  name: openstack-runtime-worker-bootstrap
+  namespace: capi-lab-blueprints
+spec:
+  template:
+    spec:
+      joinConfiguration:
+        nodeRegistration:
+          name: "{{ v1.local_hostname }}"
+          kubeletExtraArgs:
+            - name: cloud-provider
+              value: external
+            - name: provider-id
+              value: "openstack:///{{ v1.instance_id }}"

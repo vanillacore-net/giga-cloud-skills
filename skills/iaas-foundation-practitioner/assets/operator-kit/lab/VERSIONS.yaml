@@ -1,0 +1,13 @@
+schema: chapter-3-lab-versions/v1
+validated_on_build_host:
+  opentofu: "1.12.6"
+  openstackclient: "8.2.0"
+  python: "3.13.5"
+  shellcheck: "0.11.0"
+required:
+  opentofu: ">= 1.6.0"
+  openstack_provider: "3.4.0"
+  shellcheck: ">= 0.9.0"
+notes:
+  - The provider lock file is authoritative for the OpenTofu recipe.
+  - OpenStack API microversions and Horizon layouts remain deployment-specific.

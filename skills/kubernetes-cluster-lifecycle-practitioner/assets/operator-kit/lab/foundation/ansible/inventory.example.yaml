@@ -1,0 +1,9 @@
+all:
+  hosts:
+    management-seed:
+      ansible_host: 10.42.0.20
+      ansible_user: ubuntu
+      ansible_ssh_common_args: >-
+        -o ProxyJump=ubuntu@REPLACE_WITH_GATEWAY_PUBLIC_IP
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

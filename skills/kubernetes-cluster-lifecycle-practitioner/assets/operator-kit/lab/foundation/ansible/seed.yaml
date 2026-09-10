@@ -1,0 +1,227 @@
+---
+- name: Configure and initialise the Chapter 4 seed cluster
+  hosts: management-seed
+  become: true
+  gather_facts: true
+
+  pre_tasks:
+    - name: Require reviewed variables
+      ansible.builtin.assert:
+        that:
+          - kubernetes_version is match('^v[0-9]+\.[0-9]+\.[0-9]+$')
+          - kubeadm_config_api_version == 'kubeadm.k8s.io/v1beta4'
+          - management_api_address | ansible.utils.ipaddr
+          - management_pod_cidr | ansible.utils.ipaddr
+          - management_service_cidr | ansible.utils.ipaddr
+          - management_pod_cidr != management_service_cidr
+        fail_msg: Copy group_vars/all.example.yaml to group_vars/all.yaml and review every value.
+
+    - name: Wait for cloud-init to finish base-image preparation
+      ansible.builtin.command: cloud-init status --wait
+      changed_when: false
+
+    - name: Verify that DNS resolves the Kubernetes registry
+      ansible.builtin.command: getent hosts registry.k8s.io
+      changed_when: false
+
+    - name: Verify that the host clock is synchronised
+      ansible.builtin.command: timedatectl show --property=NTPSynchronized --value
+      register: time_sync
+      changed_when: false
+      retries: 12
+      delay: 5
+      until: time_sync.stdout | trim == 'yes'
+
+  tasks:
+    - name: Install container and repository prerequisites
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+          - gpg
+          - containerd
+        state: present
+        update_cache: true
+
+    - name: Load Kubernetes network modules at boot
+      ansible.builtin.copy:
+        dest: /etc/modules-load.d/kubernetes.conf
+        mode: '0644'
+        content: |
+          overlay
+          br_netfilter
+
+    - name: Load Kubernetes network modules now
+      community.general.modprobe:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - overlay
+        - br_netfilter
+
+    - name: Apply Kubernetes forwarding and bridge sysctls
+      ansible.posix.sysctl:
+        name: "{{ item.name }}"
+        value: "{{ item.value }}"
+        state: present
+        sysctl_set: true
+        reload: true
+      loop:
+        - { name: net.bridge.bridge-nf-call-iptables, value: '1' }
+        - { name: net.ipv4.ip_forward, value: '1' }
+
+    - name: Disable active swap for kubelet consistency
+      ansible.builtin.command: swapoff -a
+      changed_when: ansible_swaptotal_mb | int > 0
+      when: ansible_swaptotal_mb | int > 0
+
+    - name: Disable swap entries after reboot
+      ansible.builtin.replace:
+        path: /etc/fstab
+        regexp: '^(\s*[^#].*\s+swap\s+.*)$'
+        replace: '# \1'
+
+    - name: Create containerd configuration directory
+      ansible.builtin.file:
+        path: /etc/containerd
+        state: directory
+        mode: '0755'
+
+    - name: Generate the distribution containerd configuration once
+      ansible.builtin.shell: |
+        set -o pipefail
+        containerd config default > /etc/containerd/config.toml
+      args:
+        executable: /bin/bash
+        creates: /etc/containerd/config.toml
+      notify: Restart containerd
+
+    - name: Use the systemd cgroup driver expected by kubelet
+      ansible.builtin.replace:
+        path: /etc/containerd/config.toml
+        regexp: 'SystemdCgroup = false'
+        replace: 'SystemdCgroup = true'
+      notify: Restart containerd
+
+    - name: Create the Kubernetes repository key directory
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Download the Kubernetes repository signing key
+      ansible.builtin.get_url:
+        url: "https://pkgs.k8s.io/core:/stable:/{{ kubernetes_package_series }}/deb/Release.key"
+        dest: /tmp/kubernetes-release.key
+        mode: '0644'
+
+    - name: Install the Kubernetes repository keyring
+      ansible.builtin.command:
+        cmd: gpg --dearmor --yes --output /etc/apt/keyrings/kubernetes-apt-keyring.gpg /tmp/kubernetes-release.key
+      changed_when: true
+
+    - name: Configure the pinned Kubernetes package series
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/{{ kubernetes_package_series }}/deb/ /"
+        filename: kubernetes
+        state: present
+
+    - name: Install exact kubelet, kubeadm and kubectl package versions
+      ansible.builtin.apt:
+        name:
+          - "kubelet={{ kubernetes_debian_package_version }}"
+          - "kubeadm={{ kubernetes_debian_package_version }}"
+          - "kubectl={{ kubernetes_debian_package_version }}"
+        state: present
+        update_cache: true
+        allow_downgrade: true
+
+    - name: Hold Kubernetes packages until the declared upgrade
+      ansible.builtin.dpkg_selections:
+        name: "{{ item }}"
+        selection: hold
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: Flush runtime changes before kubeadm
+      ansible.builtin.meta: flush_handlers
+
+    - name: Render the complete seed-cluster definition
+      ansible.builtin.template:
+        src: kubeadm-config.yaml.j2
+        dest: /etc/kubernetes/kubeadm-config.yaml
+        mode: '0600'
+
+    - name: Validate the kubeadm API and fields before initialization
+      ansible.builtin.command: kubeadm config validate --config /etc/kubernetes/kubeadm-config.yaml
+      changed_when: false
+
+    - name: Initialize the single-node learning seed
+      ansible.builtin.command: kubeadm init --config /etc/kubernetes/kubeadm-config.yaml
+      args:
+        creates: /etc/kubernetes/admin.conf
+
+    - name: Create the protected administrative kubeconfig directory
+      ansible.builtin.file:
+        path: "/home/{{ seed_admin_user }}/.kube"
+        state: directory
+        owner: "{{ seed_admin_user }}"
+        group: "{{ seed_admin_user }}"
+        mode: '0700'
+
+    - name: Copy the administrative kubeconfig with restricted permissions
+      ansible.builtin.copy:
+        src: /etc/kubernetes/admin.conf
+        dest: "/home/{{ seed_admin_user }}/.kube/config"
+        remote_src: true
+        owner: "{{ seed_admin_user }}"
+        group: "{{ seed_admin_user }}"
+        mode: '0600'
+
+    - name: Download the pinned Calico operator manifest
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/projectcalico/calico/{{ calico_version }}/manifests/tigera-operator.yaml"
+        dest: "/var/lib/kubernetes/tigera-operator-{{ calico_version }}.yaml"
+        checksum: "sha256:{{ calico_operator_sha256 }}"
+        mode: '0644'
+
+    - name: Render the Calico Installation resource with the declared Pod CIDR
+      ansible.builtin.template:
+        src: calico-installation.yaml.j2
+        dest: /var/lib/kubernetes/calico-installation.yaml
+        mode: '0644'
+
+    - name: Install the pinned Calico operator
+      ansible.builtin.command: >-
+        kubectl --kubeconfig /etc/kubernetes/admin.conf apply
+        -f /var/lib/kubernetes/tigera-operator-{{ calico_version }}.yaml
+      register: calico_operator
+      changed_when: "'created' in calico_operator.stdout or 'configured' in calico_operator.stdout"
+
+    - name: Wait for the Calico Installation API
+      ansible.builtin.command: >-
+        kubectl --kubeconfig /etc/kubernetes/admin.conf wait
+        --for=condition=Established crd/installations.operator.tigera.io --timeout=120s
+      changed_when: false
+
+    - name: Declare the Calico network implementation
+      ansible.builtin.command: >-
+        kubectl --kubeconfig /etc/kubernetes/admin.conf apply
+        -f /var/lib/kubernetes/calico-installation.yaml
+      register: calico_installation
+      changed_when: "'created' in calico_installation.stdout or 'configured' in calico_installation.stdout"
+
+    - name: Wait for the seed Node to become Ready
+      ansible.builtin.command: >-
+        kubectl --kubeconfig /etc/kubernetes/admin.conf wait
+        --for=condition=Ready node --all --timeout=300s
+      changed_when: false
+
+  handlers:
+    - name: Restart containerd
+      ansible.builtin.service:
+        name: containerd
+        state: restarted
+        enabled: true

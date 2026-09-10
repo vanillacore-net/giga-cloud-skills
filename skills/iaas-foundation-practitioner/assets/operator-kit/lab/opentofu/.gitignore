@@ -1,0 +1,8 @@
+# Local credentials, input values, state, and plans
+clouds.yaml
+terraform.tfvars
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/
+crash.log

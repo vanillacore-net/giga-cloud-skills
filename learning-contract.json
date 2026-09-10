@@ -1,0 +1,231 @@
+{
+  "schema_version": 3,
+  "package": "vanillacore-giga-cloud",
+  "package_version": "0.4.0",
+  "expected_skills": [
+    "giga-cloud-learning-guide",
+    "workload-cloud-fit-assessment",
+    "cloud-delivery-model-advisor",
+    "cloud-interoperability-explainer",
+    "cloud-decision-gap-discovery",
+    "cloud-decision-matrix-steward",
+    "public-service-platform-architecture",
+    "iaas-foundation-practitioner",
+    "kubernetes-cluster-lifecycle-practitioner"
+  ],
+  "learning_modes": {
+    "ask": "Answer directly, then separate transferable concepts, reference details, assumptions, validation status, and sources.",
+    "learn": "Teach one bounded concept through a service case, then test understanding.",
+    "work": "Coach or execute Spec -> Run -> Validation. Repeat. Use the portable operator kit for Chapter 3 and 4 operations without filling local gaps.",
+    "challenge": "Capture the learner attempt, then test assumptions, failure paths, responsibility, dependencies, and evidence.",
+    "review": "Return separate architecture, content, syntax, and evidence verdicts with exact repairs."
+  },
+  "review_axes": [
+    "architecture",
+    "content",
+    "syntax",
+    "evidence"
+  ],
+  "validation_statuses": [
+    "validated",
+    "partially_validated",
+    "illustrative",
+    "unverified"
+  ],
+  "chapters": {
+    "1": {
+      "reader_question": "Which operating arrangement is defensible for this public-service workload?",
+      "primary_skill": "giga-cloud-learning-guide",
+      "supporting_skills": [
+        "workload-cloud-fit-assessment",
+        "cloud-delivery-model-advisor",
+        "cloud-interoperability-explainer",
+        "cloud-decision-gap-discovery",
+        "cloud-decision-matrix-steward"
+      ],
+      "output": "service_arrangement_decision_record",
+      "schema": "service-arrangement-decision-record/v1",
+      "routing_keywords": [
+        "operating arrangement",
+        "delivery model",
+        "cloud fit",
+        "placement choice",
+        "portability and exit"
+      ],
+      "coverage_terms": [
+        "placement",
+        "managed service layer",
+        "operating model",
+        "retained accountability",
+        "portability",
+        "exit",
+        "service_arrangement_decision_record"
+      ],
+      "challenge_checks": [
+        "three_axes",
+        "label_claims",
+        "retained_accountability",
+        "recovery_and_exit_evidence",
+        "no_numeric_winner"
+      ]
+    },
+    "2": {
+      "reader_question": "What must the foundation and platform provide for the service to remain dependable?",
+      "primary_skill": "public-service-platform-architecture",
+      "supporting_skills": [
+        "cloud-interoperability-explainer",
+        "cloud-decision-gap-discovery"
+      ],
+      "output": "foundation_readiness_architecture_brief",
+      "schema": "foundation-readiness-architecture-brief/v1",
+      "routing_keywords": [
+        "service journey dependencies",
+        "foundation readiness",
+        "component recovery",
+        "shared failure domain",
+        "platform responsibility"
+      ],
+      "coverage_terms": [
+        "physical",
+        "IaaS",
+        "platform",
+        "shared capability",
+        "service",
+        "complete user journey",
+        "foundation_readiness_architecture_brief"
+      ],
+      "challenge_checks": [
+        "component_health_is_not_service_recovery",
+        "layer_separation",
+        "shared_failure",
+        "ownership_not_invented"
+      ]
+    },
+    "3": {
+      "reader_question": "How does an IaaS platform turn approved inputs into controlled compute, network, and storage resources?",
+      "primary_skill": "iaas-foundation-practitioner",
+      "supporting_skills": [
+        "cloud-decision-gap-discovery"
+      ],
+      "output": "iaas_technical_baseline",
+      "schema": "iaas-technical-baseline/v1",
+      "routing_keywords": [
+        "IaaS resource chain",
+        "OpenStack server port",
+        "Horizon runbook",
+        "OpenStackClient",
+        "OpenTofu IaaS",
+        "provision OpenStack project resources",
+        "validate Nova Neutron Cinder"
+      ],
+      "coverage_terms": [
+        "identity",
+        "image",
+        "compute",
+        "network",
+        "storage",
+        "quota",
+        "stable identifiers",
+        "iaas_technical_baseline"
+      ],
+      "challenge_checks": [
+        "quota_is_not_capacity",
+        "service_specific_placement",
+        "stable_id_relationships",
+        "interface_session_isolation",
+        "cleanup_and_retention"
+      ]
+    },
+    "4": {
+      "reader_question": "How are Kubernetes clusters created and changed declaratively on a validated IaaS foundation?",
+      "primary_skill": "kubernetes-cluster-lifecycle-practitioner",
+      "supporting_skills": [
+        "iaas-foundation-practitioner",
+        "cloud-interoperability-explainer"
+      ],
+      "output": "cluster_runtime_baseline_record",
+      "schema": "cluster-runtime-baseline-record/v1",
+      "routing_keywords": [
+        "Cluster API CAPO",
+        "Kubernetes cluster lifecycle",
+        "management workload cluster",
+        "Argo CD cluster",
+        "CAPI upgrade",
+        "bootstrap CAPI CAPO cluster",
+        "maintain Kubernetes cluster lifecycle",
+        "private Contour Envoy ingress",
+        "cert-manager per cluster",
+        "storage smoke baseline"
+      ],
+      "coverage_terms": [
+        "Kubernetes",
+        "Cluster API",
+        "CAPO",
+        "management cluster",
+        "workload cluster",
+        "Argo CD",
+        "cluster_runtime_baseline_record",
+        "cert-manager",
+        "Contour",
+        "Envoy",
+        "storage smoke baseline"
+      ],
+      "challenge_checks": [
+        "two_reconciliation_layers",
+        "control_and_data_paths",
+        "three_load_balancers",
+        "single_owner",
+        "version_image_pair",
+        "owner_aware_cleanup",
+        "private_ingress_boundary",
+        "per_cluster_certificate_owner",
+        "storage_evidence_boundary"
+      ]
+    }
+  },
+  "handoff_order": [
+    "service_arrangement_decision_record",
+    "foundation_readiness_architecture_brief",
+    "iaas_technical_baseline",
+    "cluster_runtime_baseline_record"
+  ],
+  "operator_workflows": {
+    "operations": [
+      "assess",
+      "prepare",
+      "provision",
+      "validate",
+      "maintain",
+      "cleanup"
+    ],
+    "execution_levels": [
+      "explain",
+      "prepare",
+      "execute"
+    ],
+    "live_change_requirements": [
+      "approved target",
+      "protected credentials",
+      "supplied local values",
+      "offline validation",
+      "reviewed plan or diff",
+      "explicit action approval",
+      "bounded validation",
+      "owner-aware cleanup"
+    ],
+    "chapters": {
+      "3": {
+        "skill": "iaas-foundation-practitioner",
+        "kit": "skills/iaas-foundation-practitioner/assets/operator-kit",
+        "source_commit": "65055f17aaf13cf1944e2f4c4e1180dd3b94478a",
+        "scope": "Tenant IaaS resources in an existing OpenStack project."
+      },
+      "4": {
+        "skill": "kubernetes-cluster-lifecycle-practitioner",
+        "kit": "skills/kubernetes-cluster-lifecycle-practitioner/assets/operator-kit",
+        "source_commit": "b56cad92b74b4335de99879415d437b97ab677cd",
+        "scope": "Kubernetes cluster lifecycle on the validated IaaS foundation."
+      }
+    }
+  }
+}

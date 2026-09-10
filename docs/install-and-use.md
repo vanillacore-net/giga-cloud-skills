@@ -1,84 +1,99 @@
-# Install and use the GIGA Cloud Agent Plugin
+# Install and use the GIGA Cloud Learning Skills
 
-The package has six user-facing skills. `public-service-platform-architecture` is the architecture-level entry point. It routes a service-architecture question through the five focused cloud skills when needed.
+The package has nine user-facing skills. Install `giga-cloud-learning-guide` when a learner needs the Chapter 1 to 4 journey or is unsure where a question belongs. Install a focused skill when the question and handoff are already bounded.
 
-## Install in Hermes Agent
+## Direct skill installation
 
-Install the direct raw `SKILL.md` URL for the chapter-level guide:
+Hermes supports direct installation from a public HTTPS `SKILL.md` URL and fetches explicitly referenced support files. Its URL-safety guard rejects hosts that resolve to private or internal addresses. In an environment where this Forgejo host is internal, use a checked-out repository instead of claiming that the Raw URL is installable.
+
+From the root of a trusted checkout, install the cross-chapter guide into an empty destination:
 
 ```bash
-hermes skills install \
-  https://git.vanillacore.net/giga/cloud-skills/raw/branch/main/skills/public-service-platform-architecture/SKILL.md
+skill=giga-cloud-learning-guide
+install_root="${HERMES_HOME:-$HOME/.hermes}/skills"
+test ! -e "$install_root/$skill"
+mkdir -p "$install_root"
+cp -R "skills/$skill" "$install_root/$skill"
 ```
 
-Start a new Hermes session after installation, then invoke it explicitly:
+This copies `SKILL.md` and `references/chapter-contracts.md` together. For the Chapter 3 and Chapter 4 practitioner skills, the same checkout method also copies the practical `assets/operator-kit/` tree. For a URL hosted on a public endpoint accepted by Hermes, the equivalent command is:
+
+```bash
+hermes skills install https://PUBLIC-HOST/PATH/giga-cloud-learning-guide/SKILL.md
+```
+
+The URL form and support-file retrieval are documented in the current [Hermes CLI reference](https://hermes-agent.nousresearch.com/docs/reference/cli-commands). The guide refers to focused sibling skills, so install those separately when required, or install the complete repository as a Claude or Codex plugin.
+
+Check discovery with `hermes skills list`. Start a new Hermes session after installation, then invoke the guide explicitly:
 
 ```text
-/skill public-service-platform-architecture
+/skill giga-cloud-learning-guide
 ```
 
-Or preload it from the command line:
+## Choose a mode
 
-```bash
-hermes --skills public-service-platform-architecture
+```yaml
+mode: ask | learn | work | challenge | review
+chapter: auto | 1 | 2 | 3 | 4
+operation: assess | prepare | provision | validate | maintain | cleanup
+execution: explain | prepare | execute
+working_directory:
+change_approval:
+case:
+  service_outcome:
+  supplied_facts: []
+  supplied_evidence: []
+question:
+artifact:
+constraints: []
 ```
 
-Check installation with:
-
-```bash
-hermes skills list
-```
-
-## Use the chapter-level guide
-
-Provide a service description and ask for the architecture decision frame. For example:
+Examples:
 
 ```text
-Use public-service-platform-architecture for a university enrolment service.
-It serves students and staff through a public portal, uses federated identity,
-keeps enrolment records, exchanges data with a registry, and must recover before
-term starts. We need to decide what should be shared, where stronger boundaries
-are needed, and whether a managed platform is credible.
+Use giga-cloud-learning-guide in learn mode. Explain why placement,
+managed service layer, and operating model are separate Chapter 1 choices.
+End with one exercise and do not reveal the answer until I attempt it.
 ```
 
-The skill returns:
+```text
+Use giga-cloud-learning-guide in challenge mode for Chapter 2.
+I claim that our service is recovered because its VM is ACTIVE.
+Challenge the claim and identify the user-visible evidence still required.
+```
 
-- known facts and assumptions;
-- foundation conditions for placement, routes, identity, data and recovery;
-- shared dependencies and failure-domain questions;
-- container and platform implications;
-- delivery-model questions;
-- evidence gaps; and
-- a foundation-readiness record.
+```text
+Use iaas-foundation-practitioner in review mode. Check this OpenStack
+runbook for architecture, content, syntax, and evidence. Treat all local
+values as unknown unless they appear in the supplied evidence.
+```
 
-It does not select a provider or prescribe a topology.
+```text
+Use kubernetes-cluster-lifecycle-practitioner in work mode with operation assess
+and execution prepare. Consume this iaas_technical_baseline, copy the portable
+operator kit to /protected/work/chapter-4, run its offline checks, and prepare a
+cluster_runtime_baseline_record. Do not make a live change.
+```
 
-## Use a focused skill directly
-
-Use a focused skill when the question is narrower:
+## Focused skills
 
 | Need | Skill |
 |---|---|
-| Establish service facts and unknowns | `workload-cloud-fit-assessment` |
-| Compare hosting, IaaS, managed platform or SaaS routes | `cloud-delivery-model-advisor` |
-| Explain interoperability, portability and dependency limits | `cloud-interoperability-explainer` |
-| Identify missing evidence before a decision | `cloud-decision-gap-discovery` |
-| Maintain one reviewable local decision frame | `cloud-decision-matrix-steward` |
+| Bound the service and workload | `workload-cloud-fit-assessment` |
+| Compare operating arrangements | `cloud-delivery-model-advisor` |
+| Test interoperability, portability, dependencies, or exit | `cloud-interoperability-explainer` |
+| Turn unknowns into evidence work | `cloud-decision-gap-discovery` |
+| Build the Chapter 1 decision record | `cloud-decision-matrix-steward` |
+| Build or challenge the Chapter 2 architecture brief | `public-service-platform-architecture` |
+| Learn, operate or review the Chapter 3 IaaS baseline | `iaas-foundation-practitioner` |
+| Learn, operate or review the Chapter 4 cluster lifecycle | `kubernetes-cluster-lifecycle-practitioner` |
 
-Install an individual Hermes skill by replacing the final path in the direct URL above, for example:
-
-```bash
-hermes skills install \
-  https://git.vanillacore.net/giga/cloud-skills/raw/branch/main/skills/cloud-delivery-model-advisor/SKILL.md
-```
+For a checked-out repository installation, repeat the copy command above with the focused skill name. A copied Chapter 3 or Chapter 4 skill keeps its local `references/` and `assets/operator-kit/` files. Before practical use, copy `assets/operator-kit/` again to a protected work location and run `lab/scripts/offline-validate.sh`; never write live inputs into the installed skill. A direct `SKILL.md` URL is sufficient only when the installer and hosting endpoint also preserve the complete operator-kit tree. Otherwise use the verified checkout or plugin installation for practical operations.
 
 ## Claude Code and Codex
 
-The repository ships both plugin manifests:
+The repository ships `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`. Add the repository to the approved plugin source or marketplace. Install `vanillacore-cloud-skills` in Claude Code or `vanillacore-giga-cloud` in Codex, then begin a new session so the client discovers every folder under `skills/`.
 
-- `.claude-plugin/plugin.json` for Claude Code;
-- `.codex-plugin/plugin.json` for Codex.
+## Evidence discipline
 
-After adding this repository to the relevant Claude Code plugin source or Codex marketplace, install the `vanillacore-cloud-skills` plugin, then begin a new session so the client discovers `skills/`.
-
-The package contains public-safe decision support only. Supply the local service facts and evidence needed for a real assessment. Do not expect the skill to invent missing legal, contractual, operational or recovery evidence.
+The skills can explain generic mechanisms, review supplied artifacts, and execute the packaged Chapter 3 and 4 workflows when the host has the required tools and the operation gate is complete. They cannot infer project IDs, quotas, capacity, routes, credentials, provider versions, live reconciliation, recovery, or cleanup. Parser success and static validation remain distinct from live evidence. Source revisions and known contradictions are recorded in `source-and-scope-map.md`.

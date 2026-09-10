@@ -1,0 +1,41 @@
+lab:
+  example_only: true
+  ownership_token: chapter4-example-only
+  management_cluster_context: REPLACE_WITH_APPROVED_CONTEXT
+  management_cidr: 10.42.0.0/24
+  management_pod_cidr: 10.242.0.0/16
+  management_service_cidr: 10.98.0.0/16
+  transit_cidr: 10.43.0.0/24
+openstack:
+  cloud_name: openstack
+  credential_secret_name: REPLACE_WITH_SECRET_NAME
+  region: RegionOne
+  image_id: 00000000-0000-0000-0000-000000000001
+  control_plane_flavor: REPLACE_WITH_CONTROL_PLANE_FLAVOR
+  worker_flavor: REPLACE_WITH_WORKER_FLAVOR
+  availability_zone: REPLACE_WITH_NOVA_AZ
+  ssh_key_name: REPLACE_WITH_KEYPAIR
+  security_group_id: 00000000-0000-0000-0000-000000000002
+clusters:
+  - name: loadbalancer
+    namespace: loadbalancer
+    role: loadbalancer
+    network_id: 00000000-0000-0000-0000-000000000010
+    subnet_id: 00000000-0000-0000-0000-000000000011
+    node_cidr: 10.40.0.0/24
+    pod_cidr: 10.240.0.0/16
+    service_cidr: 10.96.0.0/16
+    api_vip: 10.40.0.10
+    control_plane_replicas: 1
+    worker_replicas: 1
+  - name: service-a
+    namespace: service-a
+    role: service-a
+    network_id: 00000000-0000-0000-0000-000000000020
+    subnet_id: 00000000-0000-0000-0000-000000000021
+    node_cidr: 10.41.0.0/24
+    pod_cidr: 10.241.0.0/16
+    service_cidr: 10.97.0.0/16
+    api_vip: 10.41.0.10
+    control_plane_replicas: 1
+    worker_replicas: 1
