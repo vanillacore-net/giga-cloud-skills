@@ -1,7 +1,7 @@
 ---
 name: giga-cloud-learning-guide
 description: Route GIGA Cloud Chapter 1-4 learning and operations.
-version: 0.2.0
+version: 0.3.0
 author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
@@ -17,6 +17,11 @@ metadata:
       - public-service-platform-architecture
       - iaas-foundation-practitioner
       - kubernetes-cluster-lifecycle-practitioner
+      - openstack-environment
+      - openstack-compute
+      - openstack-networking
+      - openstack-storage
+      - openstack-troubleshooting
 ---
 # GIGA cloud learning guide
 
@@ -68,8 +73,8 @@ Read `references/chapter-contracts.md` when the request crosses a chapter bounda
 
 ## Procedure
 
-1. Select the mode from the user's verb. “Explain” and a direct question select `ask`; “teach” selects `learn`; “help me create” selects `work`; “challenge” or “red-team” selects `challenge`; “check” or “validate” selects `review`.
-2. Select the earliest chapter that owns the unresolved decision. Do not solve a Chapter 1 operating-arrangement gap with a Chapter 4 topology.
+1. Distinguish a concept question, artifact review and a request to inspect a real environment. “Why is this VM unreachable?” is read-only diagnosis, not only prose review. “Explain” selects `ask`; “teach” selects `learn`; practical inspection or change selects `work`; “challenge” selects `challenge`; an artifact check selects `review`. Preserve execution intent separately from learning mode.
+2. For a new architecture decision, select the earliest chapter that owns the unresolved decision. Do not solve a Chapter 1 operating-arrangement gap with a Chapter 4 topology. For existing resources, use the operational route below without forcing the user through earlier chapter decisions.
 3. State the current case boundary in one sentence: service or artifact, supplied facts, and the decision under examination. Create or preserve one `case_id`.
 4. Select exactly one primary focused skill from the chapter route. Activate it through the host's skill mechanism when available and pass the same `case_id`, mode, supplied facts, evidence, and prior handoff. Add a supporting skill only for a named secondary question.
 5. If the focused skill is unavailable, return `focused_skill_required` with its name and the complete handoff. Do not imitate an unavailable specialist with invented detail.
@@ -78,6 +83,35 @@ Read `references/chapter-contracts.md` when the request crosses a chapter bounda
 8. For Chapter 3 or 4 `work` requests, preserve `operation`, `execution`, `working_directory`, `change_approval`, and the prior handoff when activating the practitioner skill. Require its portable operator kit for practical execution.
 9. Apply the selected mode contract below. In challenge mode without a learner attempt, pose the challenge and stop before the model correction.
 10. Run the four-axis quality gate, then produce the integrated `architecture_learning_record` below with one bounded next action.
+
+## OpenStack usage route
+
+The five OpenStack usage skills are operational tools, not compulsory chapter lessons. Use them directly for existing resources and ordinary tenant tasks. Keep `iaas_technical_baseline` as the Chapter 3 teaching and Chapter 4 handoff, but do not require a full new baseline to inspect one VM or volume.
+
+Read `references/openstack-usage-contract.md`. The portable helper `scripts/route_openstack.py` accepts a JSON routing request and returns `openstack-routing-record/v1`. It makes no cloud calls and never approves a mutation:
+
+```bash
+python3 /absolute/path/to/installed/giga-cloud-learning-guide/scripts/route_openstack.py \
+  --request /protected/work/routing-request.json
+```
+
+| Task | Primary skill |
+|---|---|
+| Profiles, project, region, catalogue, quota or inventory | `openstack-environment` |
+| VM create, lifecycle or resize | `openstack-compute` |
+| Networks, routers, security rules and floating IPs | `openstack-networking` |
+| Volumes, attachments, extension and snapshots | `openstack-storage` |
+| Cross-service faults and reachability diagnosis | `openstack-troubleshooting` |
+
+1. Preserve the case ID, supplied target context, previous resource IDs and prior handoff. Discover only missing inputs for the chosen task. Unavailable catalogue or write permissions do not invalidate permitted read-only work.
+2. Activate exactly one primary focused skill through the host. Pass task, mode, execution intent, context and prior evidence. If it is absent, return the existing `focused_skill_required` continuation with the router's exact skill name, not an imitation of its operation.
+3. For multi-domain work, keep an ordered continuation queue. Prepare networking before dependent VM creation; validate each resulting ID before the next primary skill receives it. One plan approves one action, not the entire queue.
+4. Inspect ownership before direct changes. CAPI-owned targets continue through Chapter 4. OpenTofu and GitOps targets continue through their supplied declarations. An ownership label alone is not proof: the focused runtime and operator must confirm target ownership and stop on conflicting live evidence.
+5. `inspect` is read-only; `prepare` produces a proposal through read-only checks. `execute-requested` in a routing result is intent only. The focused runtime must verify the exact saved plan digest, project, region, target, current state and action-specific approval before executing.
+6. Validate the returned `openstack-operation-record/v1` against the focused skill's local contract. Require matching case, project and region, real check results, preserved stable IDs and explicit partial/blocked outcomes. Treat no live evidence as unverified, not successful execution.
+7. Place the operation record in `operator_execution` of the integrated result with its schema unchanged. Keep any existing chapter handoff alongside it; operational evidence must not silently replace missing Chapter 3 learning requirements.
+
+Never turn a request for diagnosis into repair approval. Explain on demand, prepare requested changes, and execute only after the runtime gate. A denied action names its missing permission or unsupported API; other allowed actions can proceed. Guest, application, backup and recovery results need their own evidence.
 
 ## Integrated output
 

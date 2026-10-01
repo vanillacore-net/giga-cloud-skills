@@ -1,0 +1,5 @@
+interface:
+  display_name: OpenStack Environment
+  short_description: Establish scoped access and action-specific capabilities.
+policy:
+  allow_implicit_invocation: true

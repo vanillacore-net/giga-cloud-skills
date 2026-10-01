@@ -31,6 +31,16 @@ Immutable reading links:
 - [Chapter 4](https://git.vanillacore.net/giga/content/src/commit/b56cad92b74b4335de99879415d437b97ab677cd/chapter-4/chapter-4.md)
 - [Chapter 4 lab](https://git.vanillacore.net/giga/content/src/commit/b56cad92b74b4335de99879415d437b97ab677cd/chapter-4/lab/README.md)
 
+## Version 0.5.0 operational extension
+
+The immutable Chapter 3 source pin remains `65055f17aaf13cf1944e2f4c4e1180dd3b94478a`. That reviewed chapter package has since been merged into content main as `9b78032b56aa7070273d4b7e2794bbd82cd96a1d`; the historical pre-merge observations above describe version 0.4.0, not the current publication state.
+
+Version 0.5.0 adds newly authored tenant-usage tools rather than relabeling the lab as a general operator. The five independently installed usage skills have a fixed action catalogue, local execution contracts and checksum-protected operator kits. Their source records identify the release runtime and its checked bytes. They use project/region-scoped OpenStackClient calls and do not install or repair the control plane.
+
+The Chapter 4 kit retains its original source pin. Two portability-level documentation repairs supply the required cloud-profile argument for read-only preflight and explicit management-context confirmation before ID capture. Fresh-session regression tests cover those documented invocations. The final kit manifest is regenerated after the repairs.
+
+No live cloud operation is implied by this source record. Version-specific client syntax, offline behavior, portable package checks and actual tenant acceptance are reported separately.
+
 ## Scope rules
 
 1. Chapter 1 chooses a bounded next step for one service or workload. It does not approve a provider or architecture.

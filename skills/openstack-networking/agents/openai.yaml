@@ -1,0 +1,5 @@
+interface:
+  display_name: OpenStack Networking
+  short_description: Build tenant networks and verify approved connectivity.
+policy:
+  allow_implicit_invocation: true
