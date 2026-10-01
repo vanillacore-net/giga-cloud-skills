@@ -74,11 +74,7 @@ def route(request: dict) -> dict:
             ambiguous_dependencies = not attaching and (not creating or bool(re.search(r'with (?:a |an |the )?volume', text)))
         order = ('networking', 'compute', 'storage') if attaching or ambiguous_dependencies else ('networking', 'storage', 'compute')
         sequence = [key for key in order if key in matches or key == selected]
-        if not domain:
-            selected = sequence[0]
-        else:
-            sequence.remove(selected)
-            sequence.insert(0, selected)
+        selected = sequence[0]
     if selected == 'environment' and re.search(MUTATION, text):
         sequence = ['environment'] + [key for key in ('networking', 'storage', 'compute') if key in matches]
     result = {

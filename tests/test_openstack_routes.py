@@ -144,6 +144,18 @@ class OperationalRoutingTests(unittest.TestCase):
             self.assertEqual(result['primary_skill'], 'openstack-networking')
             self.assertEqual(result['continuation_skills'], ['openstack-storage', 'openstack-compute'])
 
+    def test_explicit_domain_preserves_multi_domain_creation_dependencies(self):
+        question = 'Create a private network, a VM and a volume.'
+        for domain in ('compute', 'storage', 'networking'):
+            with self.subTest(domain=domain):
+                request = self.request(question, domain=domain)
+                result = route(request)
+                self.assertEqual(result['primary_skill'], 'openstack-networking')
+                self.assertEqual(result['continuation_skills'], ['openstack-storage', 'openstack-compute'])
+                self.assertEqual(result['question'], question)
+                self.assertEqual(request['domain'], domain)
+                self.assertFalse(result['mutation_authorized'])
+
     def test_volume_attachment_follows_network_and_compute(self):
         result = route(self.request('Create a private network and VM, then attach a volume.'))
         self.assertEqual(result['primary_skill'], 'openstack-networking')
