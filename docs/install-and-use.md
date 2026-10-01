@@ -1,6 +1,6 @@
 # Install and use the GIGA Cloud Learning Skills
 
-The package has nine user-facing skills. Install `giga-cloud-learning-guide` when a learner needs the Chapter 1 to 4 journey or is unsure where a question belongs. Install a focused skill when the question and handoff are already bounded.
+The package has fourteen user-facing skills. Install `giga-cloud-learning-guide` when a learner needs the Chapter 1 to 4 journey or is unsure where a question belongs. Install a focused skill when the question and handoff are already bounded.
 
 ## Direct skill installation
 
@@ -89,6 +89,42 @@ cluster_runtime_baseline_record. Do not make a live change.
 | Learn, operate or review the Chapter 4 cluster lifecycle | `kubernetes-cluster-lifecycle-practitioner` |
 
 For a checked-out repository installation, repeat the copy command above with the focused skill name. A copied Chapter 3 or Chapter 4 skill keeps its local `references/` and `assets/operator-kit/` files. Before practical use, copy `assets/operator-kit/` again to a protected work location and run `lab/scripts/offline-validate.sh`; never write live inputs into the installed skill. A direct `SKILL.md` URL is sufficient only when the installer and hosting endpoint also preserve the complete operator-kit tree. Otherwise use the verified checkout or plugin installation for practical operations.
+
+## Independent OpenStack usage
+
+For an existing OpenStack environment, install the focused usage skills you need and optionally the coordinator. Choose from `openstack-environment`, `openstack-compute`, `openstack-networking`, `openstack-storage` and `openstack-troubleshooting`. Copy the complete skill directory from the reviewed checkout, not just its SKILL.md. This includes local references, the standalone CLI, checksum manifest and source record.
+
+Runtime tools are Python 3 and an OpenStackClient installation appropriate for the target APIs. This release checks syntax against OpenStackClient 8.2.0. It does not redistribute the client or provide credentials. Use a protected local cloud-profile configuration with permissions for the selected project and action.
+
+A focused skill resolves its own installed path and copies its operator kit to an operator-supplied protected working directory. Inspect uses real read-only calls; prepare validates the target and creates a proposal without cloud changes; execute checks the exact approved proposal digest before mutation. The local `references/operations-api.md` is the executable contract and includes the supported action fields. Do not write live files into the installed skill.
+
+Examples of useful requests:
+
+```text
+Use openstack-environment. Inspect my supplied project and region, list my VMs,
+and report current quota and which checks were denied. Do not change anything.
+```
+
+```text
+Use openstack-networking. Prepare a private network and subnet in my existing
+project. Use my supplied CIDR and external network. Review each proposed
+operation before execution, and preserve created IDs for the VM step.
+```
+
+```text
+Use openstack-storage. Prepare an extension of this identified data volume.
+Explain the subsequent guest filesystem work separately. Do not apply yet.
+```
+
+```text
+Use giga-cloud-learning-guide. Diagnose why this private VM is unreachable.
+Reuse my case context and stable IDs. A missing floating IP is expected.
+Keep the investigation read-only and hand off any repair as a separate proposal.
+```
+
+These are not automatic approvals. For a mutating request, the agent must show the actual prepared proposal and receive its action-specific approval. A proposal hash computed by the agent is not evidence that a person approved it. Existing OpenTofu, CAPI and GitOps owners remain authoritative.
+
+Package, behavioral fixture and independent-copy tests are automated. Host skill activation and live tenant behavior are separate verification levels; neither is inferred from CLI help or a checksum check.
 
 ## Claude Code and Codex
 

@@ -1,7 +1,7 @@
 ---
 name: iaas-foundation-practitioner
 description: Use when learning or operating an IaaS technical baseline.
-version: 0.2.0
+version: 0.3.0
 author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
@@ -12,6 +12,11 @@ metadata:
       - giga-cloud-learning-guide
       - public-service-platform-architecture
       - cloud-decision-gap-discovery
+      - openstack-environment
+      - openstack-compute
+      - openstack-networking
+      - openstack-storage
+      - openstack-troubleshooting
 ---
 # IaaS foundation practitioner
 
@@ -73,6 +78,12 @@ Read `references/openstack-iaas-map.md`, `references/iaas-exercises.md`, `refere
 8. In `work` mode with an operation, use `references/operator-runbook.md`. Copy `assets/operator-kit/` to a protected working directory, run its offline validation, and never write local values or evidence into the installed skill.
 9. Execute a live change only when `execution: execute` is explicit and the runbook's operation-specific gate is complete. Use the host's real tools, preserve real output, and stop rather than inventing a result.
 10. Produce the `iaas_technical_baseline` using the output schema below.
+
+## Reusable OpenStack usage
+
+The bundled operator kit below remains the reviewed Chapter 3 learning path. For ordinary work in existing OpenStack projects, activate the installed usage skill that owns the task: `openstack-environment` for inventory and quota, `openstack-compute` for VMs, `openstack-networking` for networks/access, `openstack-storage` for volumes/snapshots, or `openstack-troubleshooting` for diagnosis. Preserve the case, target context, IDs and data decisions. These usage skills are independently usable and do not require a disposable lab project or completion of the chapter.
+
+The usage result is `openstack-operation-record/v1`. Use its actual observations to update the chapter baseline when relevant, without claiming that a single operation meets every baseline requirement. If the usage skill is not installed, return its exact name and task context as a continuation, not invented commands or results. Controller-owned resources continue through their owner; the five skills do not install or operate the OpenStack control plane.
 
 ## Operator workflow
 

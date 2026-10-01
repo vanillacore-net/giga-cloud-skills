@@ -61,7 +61,7 @@ Replace all examples, set `example_only: false`, then run local and read-only ch
 
 ```bash
 python3 scripts/preflight.py environment-contract.yaml
-./scripts/preflight-readonly.sh environment-contract.yaml
+./scripts/preflight-readonly.sh environment-contract.yaml "$OS_CLOUD"
 ```
 
 Render declarations into the protected work directory. Validate YAML, matching CRD schemas or server-side dry-run, then review the exact diff. Do not apply during preparation.
