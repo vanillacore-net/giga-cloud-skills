@@ -146,6 +146,42 @@ for name in sorted(actual_skills):
         if not (folder / "references" / ref).exists():
             fail(f"{name}: missing referenced file references/{ref}")
 
+# Direct-install references must stay inside their skill, including nested references.
+for folder in SKILLS.iterdir():
+    if not folder.is_dir():
+        continue
+    for source in [folder / "SKILL.md", *(folder / "references").glob("*.md")]:
+        if not source.is_file():
+            continue
+        text = source.read_text(encoding="utf-8")
+        if "../../docs/" in text:
+            fail(f"{source.relative_to(ROOT)}: runtime path escape into package docs")
+        for raw in re.findall(r"\[[^\]]+\]\(([^)]+)\)", text):
+            target = raw.split("#", 1)[0]
+            if not target or "://" in target or target.startswith("mailto:"):
+                continue
+            resolved = (source.parent / target).resolve()
+            if not resolved.is_relative_to(folder.resolve()):
+                fail(f"{source.relative_to(ROOT)}: runtime path escape {raw}")
+            elif not resolved.is_file():
+                fail(f"{source.relative_to(ROOT)}: missing local reference {raw}")
+
+platform = SKILLS / "govstack-platform-practitioner" / "SKILL.md"
+if platform.exists():
+    text = platform.read_text(encoding="utf-8")
+    for marker in (
+        "two workload spokes", "information-mediator", "example-workloads",
+        "public edge -> private per-cluster Envoy -> Service -> Pods",
+        "reject missing target values", "platform-session/v1", "platform_runtime_record/v1",
+        "workload-argocd", "destinations mismatch", "repaired reviewed source",
+        "Without live evidence", "actual Information Mediator and example workload installation",
+        "explained", "prepared", "offline-validated", "live-executed",
+    ):
+        if marker not in text:
+            fail(f"govstack-platform-practitioner: missing safety boundary {marker!r}")
+    if not (platform.parent / "scripts" / "validate_contract.py").is_file():
+        fail("govstack-platform-practitioner: missing structural contract validator")
+
 for chapter, spec in contract.get("chapters", {}).items():
     names = [spec.get("primary_skill"), *spec.get("supporting_skills", [])]
     for name in names:

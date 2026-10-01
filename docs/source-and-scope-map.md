@@ -1,6 +1,6 @@
 # Chapter source and scope map
 
-This package turns the public GIGA Chapter 1 to 4 material into reusable learning and operator workflows. It does not copy internal notes or claim that a chapter replaces current upstream product documentation.
+This package turns the public GIGA Chapter 1 to 5 material into reusable learning and operator workflows. It does not copy internal notes or claim that a chapter replaces current upstream product documentation.
 
 ## Reviewed chapter revisions
 
@@ -37,7 +37,13 @@ Immutable reading links:
 2. Chapter 2 turns service needs into foundation and platform conditions. It does not configure OpenStack or Kubernetes.
 3. Chapter 3 turns an approved IaaS requirement into a tested tenant-resource baseline. It explains a generic capability before mapping it to OpenStack.
 4. Chapter 4 consumes that baseline and manages Kubernetes cluster lifecycle, including the private workload ingress path and bounded storage and GitOps exercises in the reviewed lab. It does not claim that Kubernetes clusters form a complete multi-team platform.
-5. A later chapter owns the complete shared-platform operating model and end-user workload lifecycle.
+5. Chapter 5 bootstraps and operates the bounded GovStack runtime in an existing tenant: management/gateway, LoadBalancer and two workload spokes. Actual IM/examples workload installation belongs to Chapter 6; production recovery and service acceptance remain evidence gates.
+
+## Chapter 5 operational dependencies
+
+The Chapter 5 practitioner uses the finalized local operator kit, not inaccessible chapter working sources. Bootstrap dependency: `https://git.vanillacore.net/govstack/govstack-bootstrap.git` at `1195f539afe5a1018be07d2e1865824c225ee407`. Dashboard dependency: `https://git.vanillacore.net/govstack-apps/govstack-dashboard.git` at `f2e6ff3a0b752a0708983407e1176d72faeae702`. These pins identify operational source, not proof of a live deployment or unrestricted access. No live deployment is authorized during package construction. Final kit SOURCE/notices/checksums and native tests are required before release.
+
+At the bootstrap pin, teardown omits `workload-argocd` from its application allowlist and requires destinations that omit generated `argocd`/tenant entries. Retirement is blocked unless a repaired reviewed source is explicitly selected and tested; do not claim cleanup or weaken ownership checks.
 
 ## Known source tensions
 

@@ -1,6 +1,6 @@
 # Install and use the GIGA Cloud Learning Skills
 
-The package has nine user-facing skills. Install `giga-cloud-learning-guide` when a learner needs the Chapter 1 to 4 journey or is unsure where a question belongs. Install a focused skill when the question and handoff are already bounded.
+The package has ten user-facing skills. Install `giga-cloud-learning-guide` when a learner needs the Chapter 1 to 5 journey or is unsure where a question belongs. Install a focused skill when the question and handoff are already bounded.
 
 ## Direct skill installation
 
@@ -16,7 +16,7 @@ mkdir -p "$install_root"
 cp -R "skills/$skill" "$install_root/$skill"
 ```
 
-This copies `SKILL.md` and `references/chapter-contracts.md` together. For the Chapter 3 and Chapter 4 practitioner skills, the same checkout method also copies the practical `assets/operator-kit/` tree. For a URL hosted on a public endpoint accepted by Hermes, the equivalent command is:
+This copies `SKILL.md` and `references/chapter-contracts.md` together. For the Chapter 3, Chapter 4 and Chapter 5 practitioner skills, the same checkout method also copies the practical `assets/operator-kit/` tree. For a URL hosted on a public endpoint accepted by Hermes, the equivalent command is:
 
 ```bash
 hermes skills install https://PUBLIC-HOST/PATH/giga-cloud-learning-guide/SKILL.md
@@ -34,7 +34,7 @@ Check discovery with `hermes skills list`. Start a new Hermes session after inst
 
 ```yaml
 mode: ask | learn | work | challenge | review
-chapter: auto | 1 | 2 | 3 | 4
+chapter: auto | 1 | 2 | 3 | 4 | 5
 operation: assess | prepare | provision | validate | maintain | cleanup
 execution: explain | prepare | execute
 working_directory:
@@ -87,8 +87,23 @@ cluster_runtime_baseline_record. Do not make a live change.
 | Build or challenge the Chapter 2 architecture brief | `public-service-platform-architecture` |
 | Learn, operate or review the Chapter 3 IaaS baseline | `iaas-foundation-practitioner` |
 | Learn, operate or review the Chapter 4 cluster lifecycle | `kubernetes-cluster-lifecycle-practitioner` |
+| Explain, deploy, connect, adapt or operate the Chapter 5 platform runtime | `govstack-platform-practitioner` |
 
-For a checked-out repository installation, repeat the copy command above with the focused skill name. A copied Chapter 3 or Chapter 4 skill keeps its local `references/` and `assets/operator-kit/` files. Before practical use, copy `assets/operator-kit/` again to a protected work location and run `lab/scripts/offline-validate.sh`; never write live inputs into the installed skill. A direct `SKILL.md` URL is sufficient only when the installer and hosting endpoint also preserve the complete operator-kit tree. Otherwise use the verified checkout or plugin installation for practical operations.
+For a checked-out repository installation, repeat the copy command above with the focused skill name. A copied Chapter 3, Chapter 4 or Chapter 5 skill keeps its local `references/` and `assets/operator-kit/` files. Before practical use, copy `assets/operator-kit/` again to a protected work location and run the copied lab's documented offline validation (`lab/scripts/offline-validate.sh` for Chapters 3/4); never write live inputs into the installed skill. A direct `SKILL.md` URL is sufficient only when the installer and hosting endpoint also preserve the complete operator-kit tree. Otherwise use the verified checkout or plugin installation for practical operations.
+
+## Chapter 5 practical start
+
+Repeat the checkout copy with `skill=govstack-platform-practitioner`, including all local references, scripts and the complete finalized `assets/operator-kit/`. Verify SOURCE, checksums and third-party notices before copying the kit into an empty protected work directory. Missing kit assets block operations; a text-only installation is not a runnable kit. Read the copied `lab/README.md` and `python3 lab/scripts/platform.py --help` for exact subcommand flags.
+
+```text
+Use govstack-platform-practitioner in work mode, operation prepare, execution prepare.
+Preserve this case ID and my prior baselines. Use my supplied protected working
+directory and platform-session inputs. Verify the kit and run offline checks only.
+List missing target values, keep both information-mediator and example-workloads,
+and return platform_runtime_record/v1. Do not deploy or install Chapter 6 workloads.
+```
+
+Explanation, prepared artifacts, offline checks and real live execution are separate evidence levels. Live changes need the exact target, real supplied values, reviewed diff and named operation approval. Retirement on the pinned source is blocked unless a repaired reviewed source is selected. Carry the same case ID, stable resource IDs and explicit retention into Chapter 6.
 
 ## Claude Code and Codex
 
@@ -96,4 +111,4 @@ The repository ships `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json
 
 ## Evidence discipline
 
-The skills can explain generic mechanisms, review supplied artifacts, and execute the packaged Chapter 3 and 4 workflows when the host has the required tools and the operation gate is complete. They cannot infer project IDs, quotas, capacity, routes, credentials, provider versions, live reconciliation, recovery, or cleanup. Parser success and static validation remain distinct from live evidence. Source revisions and known contradictions are recorded in `source-and-scope-map.md`.
+The skills can explain generic mechanisms, review supplied artifacts, and execute the packaged Chapter 3 to 5 workflows when the host has the required tools and the operation gate is complete. They cannot infer project IDs, quotas, capacity, routes, credentials, provider versions, live reconciliation, recovery, or cleanup. Parser success and static validation remain distinct from live evidence. Source revisions and known contradictions are recorded in `source-and-scope-map.md`.

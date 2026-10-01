@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Validate the portable Chapter 3 and Chapter 4 operator kits."""
+"""Validate the portable Chapter 3 to 5 operator kits."""
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import os
@@ -61,6 +62,10 @@ REQUIRED = {
         "SOURCE.md",
         "THIRD_PARTY_NOTICES.md",
         "MANIFEST.sha256",
+    },
+    "5": {
+        "lab/README.md", "lab/scripts/platform.py", "SOURCE.md",
+        "THIRD_PARTY_NOTICES.md", "MANIFEST.sha256",
     },
 }
 
@@ -128,13 +133,27 @@ def verify_static_files(kit: Path) -> None:
                 fail(f"{path.relative_to(ROOT)}: shell parse failed: {result.stderr.strip()}")
 
 
-def run_offline(kit: Path) -> None:
+def run_offline(kit: Path, chapter: str) -> None:
     try:
         with tempfile.TemporaryDirectory(prefix="giga-operator-pycache-") as pycache:
             env = os.environ.copy()
             env["PYTHONPYCACHEPREFIX"] = pycache
+            if chapter == "5":
+                if not (kit / "lab" / "tests").is_dir() or not list((kit / "lab" / "tests").glob("test*.py")):
+                    fail("Chapter 5: missing native offline test suite")
+                    return
+                help_result = subprocess.run(
+                    [sys.executable, "scripts/platform.py", "--help"],
+                    cwd=kit / "lab", env=env, capture_output=True, text=True, timeout=30,
+                )
+                commands = ("init", "doctor", "bootstrap", "render", "route", "probe", "status", "scale", "replace", "upgrade", "retire", "handoff")
+                if help_result.returncode or any(command not in help_result.stdout for command in commands):
+                    fail("Chapter 5: platform CLI does not expose the required command set")
+                command = [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test*.py"]
+            else:
+                command = ["bash", "scripts/offline-validate.sh"]
             result = subprocess.run(
-                ["bash", "scripts/offline-validate.sh"],
+                command,
                 cwd=kit / "lab",
                 env=env,
                 capture_output=True,
@@ -152,13 +171,18 @@ def run_offline(kit: Path) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--chapters", nargs="+", choices=("3", "4", "5"), help="explicit partial validation; default checks all configured kits")
+    args = parser.parse_args()
     workflows = CONTRACT.get("operator_workflows", {})
     if workflows.get("operations") != ["assess", "prepare", "provision", "validate", "maintain", "cleanup"]:
         fail("learning-contract.json: operator operation order is incomplete")
     if workflows.get("execution_levels") != ["explain", "prepare", "execute"]:
         fail("learning-contract.json: execution levels are incomplete")
 
-    for chapter, spec in workflows.get("chapters", {}).items():
+    selected = args.chapters or list(workflows.get("chapters", {}))
+    for chapter in selected:
+        spec = workflows["chapters"][chapter]
         kit = ROOT / spec["kit"]
         if not kit.is_dir():
             fail(f"Chapter {chapter}: missing operator kit {spec['kit']}")
@@ -171,6 +195,8 @@ def main() -> None:
             source = source_path.read_text(encoding="utf-8")
             if spec["source_commit"] not in source:
                 fail(f"Chapter {chapter}: source commit absent from SOURCE.md")
+            if chapter == "5" and spec["dashboard_source_commit"] not in source:
+                fail("Chapter 5: dashboard source commit absent from SOURCE.md")
         combined = "\n".join(
             path.read_text(encoding="utf-8", errors="replace")
             for path in kit.rglob("*")
@@ -181,9 +207,9 @@ def main() -> None:
         verify_manifest(kit)
         verify_local_links(kit)
         verify_static_files(kit)
-        run_offline(kit)
+        run_offline(kit, chapter)
 
-    for chapter in ("3", "4"):
+    for chapter in selected:
         spec = CONTRACT["operator_workflows"]["chapters"][chapter]
         skill = (ROOT / "skills" / spec["skill"] / "SKILL.md").read_text(encoding="utf-8")
         for marker in ("assets/operator-kit/", "protected working directory", "execution: execute", "explicit operation approval"):
@@ -196,7 +222,7 @@ def main() -> None:
             print(f"- {error}")
         raise SystemExit(1)
 
-    print("OPERATOR KIT TESTS PASSED: 2 kits, 6 operations, checksums and offline validation")
+    print(f"OPERATOR KIT TESTS PASSED: {len(selected)} kits ({', '.join(selected)}), 6 operations, checksums and offline validation")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Chapter handoff contracts
 
-The handoffs keep a learner's case coherent across Chapters 1 to 4. Unknown local facts remain explicit. A handoff is a learning and review artifact, not production approval.
+The handoffs keep a learner's case coherent across Chapters 1 to 5. Unknown local facts remain explicit. A handoff is a learning and review artifact, not production approval.
 
 ## Chapter 1 output
 
@@ -123,6 +123,57 @@ cluster_runtime_baseline_record:
   live_validation: []
   assumptions_and_deviations: []
 ```
+
+## Chapter 5 output
+
+```yaml
+platform_runtime_record:
+  schema: platform_runtime_record/v1
+  case_id:
+  prior_handoff_reference:
+  session_reference:
+  source_revisions: {}
+  platform_boundary:
+  management_and_gateway: {}
+  clusters:
+    loadbalancer: {}
+    mediator: {}
+    examples: {}
+  control_path_evidence: []
+  public_edge_to_private_envoy_service_pods: []
+  domains_and_tls: {}
+  gitops_ownership_and_revisions: []
+  stable_resource_identifiers: []
+  workload_installation_boundary: chapter-6
+  use_evidence: []
+  adaptation_evidence: []
+  cleanup_or_retention_decision:
+  cleanup_blockers: []
+  operator_execution:
+    kit_source:
+    operation:
+    working_directory:
+    execution_level: explained | prepared | offline-validated | live-executed
+    change_approval:
+    checks: []
+    changed_resource_ids: []
+    evidence: []
+    rollback_or_cleanup:
+    status: passed | failed | blocked | unverified
+  static_validation: []
+  live_validation: []
+  assumptions_and_deviations: []
+  evidence_gaps: []
+  chapter_6_inputs: []
+  review:
+    architecture: pass | needs-work | unverified
+    content: pass | needs-work | unverified
+    syntax: pass | needs-work | unverified
+    evidence: pass | needs-work | unverified
+  bounded_next_action:
+```
+
+Keep `case_id`, stable resource IDs, session reference, retained ownership and gaps into Chapter 6. Actual Information Mediator and example workload installation belongs to Chapter 6, not this platform-runtime record. No offline check proves live execution.
 
 ## Review envelope
 

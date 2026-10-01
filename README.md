@@ -1,6 +1,6 @@
 # GIGA Cloud Learning Skills
 
-This repository packages nine public-safe agent skills for Claude Code, Codex, and direct skill installation. Learners can ask questions, learn concepts, build bounded artifacts, challenge claims, review architecture or syntax, and operate the Chapter 3 and 4 practical paths from protected working copies.
+This repository packages ten public-safe agent skills for Claude Code, Codex, and direct skill installation. Learners can ask questions, learn concepts, build bounded artifacts, challenge claims, review architecture or syntax, and operate the Chapter 3 to 5 practical paths from protected working copies.
 
 ## Skill system
 
@@ -8,17 +8,18 @@ This repository packages nine public-safe agent skills for Claude Code, Codex, a
 
 | Scope | Skill | Learner result |
 |---|---|---|
-| Chapters 1 to 4 | `giga-cloud-learning-guide` | Route, mode, handoff continuity, challenge, and final quality envelope |
+| Chapters 1 to 5 | `giga-cloud-learning-guide` | Route, mode, handoff continuity, challenge, and final quality envelope |
 | Chapter 1 | `workload-cloud-fit-assessment` | A bounded service and workload profile |
 | Chapter 1 | `cloud-delivery-model-advisor` | A three-axis operating-arrangement comparison |
-| Chapters 1 to 4 | `cloud-interoperability-explainer` | Interoperability, portability, dependency, and exit findings |
-| Chapters 1 to 4 | `cloud-decision-gap-discovery` | Prioritised evidence gaps and stop conditions |
+| Chapters 1 to 5 | `cloud-interoperability-explainer` | Interoperability, portability, dependency, and exit findings |
+| Chapters 1 to 5 | `cloud-decision-gap-discovery` | Prioritised evidence gaps and stop conditions |
 | Chapter 1 | `cloud-decision-matrix-steward` | A reviewable service-arrangement decision record |
 | Chapter 2 | `public-service-platform-architecture` | A foundation-readiness architecture brief |
 | Chapter 3 | `iaas-foundation-practitioner` | An IaaS baseline plus a portable OpenStack tenant-resource operator kit |
 | Chapter 4 | `kubernetes-cluster-lifecycle-practitioner` | A cluster-runtime baseline plus a portable CAPI/CAPO operator kit |
+| Chapter 5 | `govstack-platform-practitioner` | A platform_runtime_record plus a protected runtime operator path for management/gateway, LoadBalancer and two workload spokes |
 
-The package intentionally uses nine coherent skills rather than separate skills for every OpenStack service, client interface, Kubernetes controller, or lifecycle operation.
+The package intentionally uses ten coherent skills rather than separate skills for every OpenStack service, client interface, Kubernetes controller, or lifecycle operation.
 
 ## Learning contract
 
@@ -32,11 +33,13 @@ The machine-readable route and coverage contract is `learning-contract.json`. Hu
 
 ## Practical operator paths
 
-The Chapter 3 and Chapter 4 practitioner skills include commit-pinned operator kits under their local `assets/operator-kit/` directories. In `work` mode they support `assess`, `prepare`, `provision`, `validate`, `maintain`, and `cleanup` with `explain`, `prepare`, or `execute` intent.
+The Chapter 3, Chapter 4 and Chapter 5 practitioner skills include commit-pinned operator kits under their local `assets/operator-kit/` directories. In `work` mode they support `assess`, `prepare`, `provision`, `validate`, `maintain`, and `cleanup` with `explain`, `prepare`, or `execute` intent.
 
 A practical run always copies the kit to a protected working directory. Offline validation runs before environment values are accepted. Live changes require an approved target, protected credentials, supplied local inputs, a reviewed plan or diff, explicit action approval, bounded validation and owner-aware cleanup. The skill returns an `operator_execution` record with real checks and evidence status.
 
 Chapter 3 operates resources inside an existing OpenStack project. Chapter 4 establishes and maintains the Kubernetes cluster-lifecycle layer on that IaaS foundation, including the reviewed per-cluster cert-manager and private Contour/Envoy ingress declarations, bounded storage smoke test, scaling, upgrades, Argo CD path and owner-aware cleanup. Neither skill silently expands into OpenStack control-plane installation or the complete Chapter 5 production platform.
+
+Chapter 5 turns supplied tenant and lifecycle decisions into a bounded GovStack runtime: management/gateway -> LoadBalancer -> information-mediator and example-workloads. It connects public edge -> private per-cluster Envoy -> Service -> Pods, checks bounded use, and supports scaling, replacement, upgrades and explicit cleanup/retention. Actual IM/examples installation is Chapter 6 and preserves the same case and stable IDs. The pinned source has a teardown allowlist/destination mismatch; retirement must be reported blocked unless a repaired reviewed source is selected.
 
 ## Platform integration
 
@@ -54,6 +57,7 @@ The repository contains distilled, public-safe learning workflows, contracts, an
 python3 scripts/validate_skills.py
 python3 scripts/test_learning_paths.py
 python3 scripts/test_operator_kits.py
+python3 scripts/test_platform_practitioner.py
 ```
 
-The first command validates package syntax, manifests, frontmatter, references, relationships, and public-safety markers. The second runs deterministic routing and Chapter 1 to 4 coverage tests. The third verifies checksums, portable paths, script and data syntax, and both operator kits through their offline suites. These checks validate the package and its offline behaviour, not a live cloud or cluster.
+The first command validates package syntax, manifests, frontmatter, references, relationships, and public-safety markers. The second runs deterministic routing and Chapter 1 to 5 coverage tests. The third verifies checksums, portable paths, script and data syntax, and all three operator kits through their offline suites. The fourth runs positive and mutation tests for Chapter 5 routing, target values, two-spoke and evidence boundaries. These checks validate the package and its offline behaviour, not a live cloud or cluster.

@@ -1,7 +1,7 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "package": "vanillacore-giga-cloud",
-  "package_version": "0.4.0",
+  "package_version": "0.5.0",
   "expected_skills": [
     "giga-cloud-learning-guide",
     "workload-cloud-fit-assessment",
@@ -11,12 +11,13 @@
     "cloud-decision-matrix-steward",
     "public-service-platform-architecture",
     "iaas-foundation-practitioner",
-    "kubernetes-cluster-lifecycle-practitioner"
+    "kubernetes-cluster-lifecycle-practitioner",
+    "govstack-platform-practitioner"
   ],
   "learning_modes": {
     "ask": "Answer directly, then separate transferable concepts, reference details, assumptions, validation status, and sources.",
     "learn": "Teach one bounded concept through a service case, then test understanding.",
-    "work": "Coach or execute Spec -> Run -> Validation. Repeat. Use the portable operator kit for Chapter 3 and 4 operations without filling local gaps.",
+    "work": "Coach or execute Spec -> Run -> Validation. Repeat. Use the portable operator kit for Chapter 3 to 5 operations without filling local gaps.",
     "challenge": "Capture the learner attempt, then test assumptions, failure paths, responsibility, dependencies, and evidence.",
     "review": "Return separate architecture, content, syntax, and evidence verdicts with exact repairs."
   },
@@ -181,13 +182,56 @@
         "per_cluster_certificate_owner",
         "storage_evidence_boundary"
       ]
+    },
+    "5": {
+      "reader_question": "How do we bootstrap, deploy, connect, adapt and operate a bounded GovStack platform in an existing OpenStack tenant?",
+      "primary_skill": "govstack-platform-practitioner",
+      "supporting_skills": [],
+      "output": "platform_runtime_record",
+      "schema": "platform_runtime_record/v1",
+      "routing_keywords": [
+        "GovStack platform",
+        "platform-session",
+        "platform runtime",
+        "two workload spokes",
+        "information-mediator",
+        "example-workloads",
+        "bootstrap management gateway",
+        "public edge to both spokes"
+      ],
+      "coverage_terms": [
+        "OpenStack tenant",
+        "management/gateway",
+        "LoadBalancer",
+        "two workload spokes",
+        "information-mediator",
+        "example-workloads",
+        "private per-cluster Envoy",
+        "Service",
+        "Pods",
+        "platform-session/v1",
+        "platform_runtime_record/v1",
+        "Chapter 6",
+        "workload-argocd"
+      ],
+      "challenge_checks": [
+        "two_spoke_boundary",
+        "control_and_data_paths",
+        "missing_target_values",
+        "private_ingress_boundary",
+        "owner_aware_cleanup",
+        "retirement_source_blocker",
+        "no_premature_live_claims",
+        "chapter_6_installation_boundary"
+      ]
     }
   },
   "handoff_order": [
     "service_arrangement_decision_record",
     "foundation_readiness_architecture_brief",
     "iaas_technical_baseline",
-    "cluster_runtime_baseline_record"
+    "cluster_runtime_baseline_record",
+    "platform_runtime_record"
   ],
   "operator_workflows": {
     "operations": [
@@ -225,6 +269,14 @@
         "kit": "skills/kubernetes-cluster-lifecycle-practitioner/assets/operator-kit",
         "source_commit": "b56cad92b74b4335de99879415d437b97ab677cd",
         "scope": "Kubernetes cluster lifecycle on the validated IaaS foundation."
+      },
+      "5": {
+        "skill": "govstack-platform-practitioner",
+        "kit": "skills/govstack-platform-practitioner/assets/operator-kit",
+        "source_commit": "1195f539afe5a1018be07d2e1865824c225ee407",
+        "dashboard_source_commit": "f2e6ff3a0b752a0708983407e1176d72faeae702",
+        "scope": "Management/gateway, dedicated LoadBalancer and two workload spokes in an existing OpenStack tenant; actual business workload installation belongs to Chapter 6.",
+        "kit_source_commit": "ba05e6cb1c8a69019d255b26080020372c997a06"
       }
     }
   }

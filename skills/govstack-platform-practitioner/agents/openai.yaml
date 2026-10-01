@@ -1,0 +1,5 @@
+interface:
+  display_name: GovStack Platform Practitioner
+  short_description: Explain, deploy, adapt and operate a bounded GovStack runtime.
+policy:
+  allow_implicit_invocation: true

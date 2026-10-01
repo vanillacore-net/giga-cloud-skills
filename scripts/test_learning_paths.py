@@ -119,9 +119,9 @@ def main() -> None:
             failures.append(f"meta-skill orchestration marker absent: {marker}")
 
     if CONTRACT["handoff_order"] != [
-        CONTRACT["chapters"][str(number)]["output"] for number in range(1, 5)
+        CONTRACT["chapters"][str(number)]["output"] for number in range(1, len(CONTRACT["chapters"]) + 1)
     ]:
-        failures.append("handoff order does not match Chapter 1 to 4 outputs")
+        failures.append("handoff order does not match configured chapter outputs")
 
     if failures:
         print("LEARNING PATH TESTS FAILED")
@@ -131,7 +131,7 @@ def main() -> None:
 
     print(
         "LEARNING PATH TESTS PASSED: "
-        f"{len(FIXTURES['cases'])} routes, 4 chapter contracts, "
+        f"{len(FIXTURES['cases'])} routes, {len(CONTRACT['chapters'])} chapter contracts, "
         f"{len(CONTRACT['handoff_order'])} handoffs"
     )
 

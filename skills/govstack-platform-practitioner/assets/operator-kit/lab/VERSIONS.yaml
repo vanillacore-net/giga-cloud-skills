@@ -1,0 +1,12 @@
+schema: chapter5-source-versions/v1
+bootstrap:
+  repository: https://git.vanillacore.net/govstack/govstack-bootstrap
+  commit: 1195f539afe5a1018be07d2e1865824c225ee407
+dashboard:
+  repository: https://git.vanillacore.net/govstack-apps/govstack-dashboard
+  commit: f2e6ff3a0b752a0708983407e1176d72faeae702
+worked_kubernetes_version: v1.36.3
+probe:
+  image: docker.io/hashicorp/http-echo@sha256:fcb75f691c8b0414d670ae570240cbf95502cc18a9ba57e982ecac589760a186
+  tested_scope: extracted executable on local Linux/amd64, not Kubernetes
+execution_scope: offline renderer/lifecycle/Helm and localhost HTTPS; no live cloud deployment

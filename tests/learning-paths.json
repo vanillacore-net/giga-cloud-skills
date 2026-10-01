@@ -83,6 +83,46 @@
       "required_challenge_checks": [
         "storage_evidence_boundary"
       ]
+    },
+    {
+      "id": "chapter-5-platform-deploy",
+      "prompt": "Prepare the GovStack platform with bootstrap management gateway and two workload spokes: information-mediator and example-workloads.",
+      "chapter": "5",
+      "output": "platform_runtime_record",
+      "required_challenge_checks": [
+        "two_spoke_boundary",
+        "missing_target_values"
+      ]
+    },
+    {
+      "id": "chapter-5-platform-routing",
+      "prompt": "Validate the public edge to both spokes in this platform runtime; do not expose private ingress.",
+      "chapter": "5",
+      "output": "platform_runtime_record",
+      "required_challenge_checks": [
+        "control_and_data_paths",
+        "private_ingress_boundary",
+        "no_premature_live_claims"
+      ]
+    },
+    {
+      "id": "chapter-5-platform-cleanup",
+      "prompt": "Review the GovStack platform retirement allowlist and workload-argocd mismatch before cleanup.",
+      "chapter": "5",
+      "output": "platform_runtime_record",
+      "required_challenge_checks": [
+        "retirement_source_blocker",
+        "owner_aware_cleanup"
+      ]
+    },
+    {
+      "id": "chapter-5-platform-chapter6",
+      "prompt": "Continue this platform-session into actual Information Mediator workload installation in Chapter 6, preserving case and runtime IDs.",
+      "chapter": "5",
+      "output": "platform_runtime_record",
+      "required_challenge_checks": [
+        "chapter_6_installation_boundary"
+      ]
     }
   ]
 }
