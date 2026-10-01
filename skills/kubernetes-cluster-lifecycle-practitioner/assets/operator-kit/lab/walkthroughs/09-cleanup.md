@@ -120,11 +120,11 @@ We capture stable compute, port, volume and API-load-balancer IDs before deletio
 ```bash
 # We capture both ownership sets before any CAPI deletion begins.
 mkdir -p evidence
-python3 scripts/capture-openstack-ids.py \
+CONFIRM_MANAGEMENT_CONTEXT="$MANAGEMENT_CONTEXT" python3 scripts/capture-openstack-ids.py \
   "$KUBECONFIG" "$MANAGEMENT_CONTEXT" \
   service-a service-a "$OS_CLOUD" \
   evidence/service-a-resource-ids.json
-python3 scripts/capture-openstack-ids.py \
+CONFIRM_MANAGEMENT_CONTEXT="$MANAGEMENT_CONTEXT" python3 scripts/capture-openstack-ids.py \
   "$KUBECONFIG" "$MANAGEMENT_CONTEXT" \
   loadbalancer loadbalancer "$OS_CLOUD" \
   evidence/loadbalancer-resource-ids.json

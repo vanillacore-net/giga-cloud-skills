@@ -1,7 +1,7 @@
 {
   "schema_version": 4,
   "package": "vanillacore-giga-cloud",
-  "package_version": "0.5.0",
+  "package_version": "0.6.0",
   "expected_skills": [
     "giga-cloud-learning-guide",
     "workload-cloud-fit-assessment",
@@ -12,7 +12,12 @@
     "public-service-platform-architecture",
     "iaas-foundation-practitioner",
     "kubernetes-cluster-lifecycle-practitioner",
-    "govstack-platform-practitioner"
+    "govstack-platform-practitioner",
+    "openstack-environment",
+    "openstack-compute",
+    "openstack-networking",
+    "openstack-storage",
+    "openstack-troubleshooting"
   ],
   "learning_modes": {
     "ask": "Answer directly, then separate transferable concepts, reference details, assumptions, validation status, and sources.",
@@ -279,5 +284,34 @@
         "kit_source_commit": "ba05e6cb1c8a69019d255b26080020372c997a06"
       }
     }
+  },
+  "openstack_usage": {
+    "schema": "openstack-usage-system/v1",
+    "domains": {
+      "environment": "openstack-environment",
+      "compute": "openstack-compute",
+      "networking": "openstack-networking",
+      "storage": "openstack-storage",
+      "troubleshooting": "openstack-troubleshooting"
+    },
+    "output_schema": "openstack-operation-record/v1",
+    "routing_schema": "openstack-routing-record/v1",
+    "router": "skills/giga-cloud-learning-guide/scripts/route_openstack.py",
+    "execution_intents": [
+      "inspect",
+      "explain",
+      "prepare",
+      "execute"
+    ],
+    "scope": "Existing OpenStack tenant projects, not control-plane operations.",
+    "context_continuity": [
+      "case_id",
+      "cloud",
+      "project_id",
+      "region",
+      "resource_ids",
+      "prior_handoff"
+    ],
+    "approval": "Explicit operation-specific approval bound to the saved plan digest; a router never authorizes mutation."
   }
 }

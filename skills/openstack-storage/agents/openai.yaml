@@ -1,0 +1,5 @@
+interface:
+  display_name: OpenStack Storage
+  short_description: Operate volumes and separate API from guest changes.
+policy:
+  allow_implicit_invocation: true

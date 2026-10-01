@@ -1,0 +1,5 @@
+interface:
+  display_name: OpenStack Compute
+  short_description: Operate tenant VMs and verify resize decisions.
+policy:
+  allow_implicit_invocation: true

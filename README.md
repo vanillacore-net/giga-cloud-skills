@@ -1,6 +1,6 @@
 # GIGA Cloud Learning Skills
 
-This repository packages ten public-safe agent skills for Claude Code, Codex, and direct skill installation. Learners can ask questions, learn concepts, build bounded artifacts, challenge claims, review architecture or syntax, and operate the Chapter 3 to 5 practical paths from protected working copies.
+This repository packages fifteen public-safe agent skills for Claude Code, Codex and independent checkout installation. The Chapter 1 to 5 learning system includes portable operator kits and is joined by five task-focused OpenStack usage skills for existing tenant environments.
 
 ## Skill system
 
@@ -19,7 +19,25 @@ This repository packages ten public-safe agent skills for Claude Code, Codex, an
 | Chapter 4 | `kubernetes-cluster-lifecycle-practitioner` | A cluster-runtime baseline plus a portable CAPI/CAPO operator kit |
 | Chapter 5 | `govstack-platform-practitioner` | A platform_runtime_record plus a protected runtime operator path for management/gateway, LoadBalancer and two workload spokes |
 
-The package intentionally uses ten coherent skills rather than separate skills for every OpenStack service, client interface, Kubernetes controller, or lifecycle operation.
+The ten chapter and cross-cutting skills remain the learning system. Five task-focused OpenStack skills add practical tenant operations without turning every API command into a separate skill. Each usage skill can be installed alone with its complete local operator kit.
+
+## OpenStack usage toolkit
+
+| Need | Skill |
+|---|---|
+| Profile/project/region, catalogue, inventory and quota | `openstack-environment` |
+| VM creation, lifecycle and resize | `openstack-compute` |
+| Networks, subnets, routers, security rules and floating IPs | `openstack-networking` |
+| Volumes, attachments, extension and snapshots | `openstack-storage` |
+| Cross-service fault diagnosis and repair handoff | `openstack-troubleshooting` |
+
+These are tools for existing tenant environments, not only disposable learning labs. A private VM does not require a floating IP or extra volume. Credentials stay in local OpenStack configuration; service availability and permissions are checked per task. Missing permission for one API is reported without inventing or discarding permitted results.
+
+Each skill includes a standalone `assets/operator-kit/scripts/openstack_ops.py` and local operation contract. It uses OpenStackClient with explicit project and region, read-only inspection, a fixed action catalogue, saved proposals and digest-bound change approval. Inspect and prepare do not mutate cloud resources. Execution checkpoints IDs and reports partial failures rather than automatically replaying or cleaning up. Known controller ownership continues through its owner.
+
+The skill of skills uses a portable operational router for English and German task requests, preserves the case and prior IDs, activates one focused skill and keeps a continuation queue for cross-domain tasks. A routing result is never approval to change state. The Chapter 3 learning baseline and Chapter 4 handoff remain intact.
+
+See [usage and installation](docs/install-and-use.md) and [executable operation contract](docs/openstack-operations-api.md). This release checks OpenStackClient 8.2.0 syntax and offline behavior. It does not claim live acceptance on your cloud.
 
 ## Learning contract
 
@@ -57,7 +75,8 @@ The repository contains distilled, public-safe learning workflows, contracts, an
 python3 scripts/validate_skills.py
 python3 scripts/test_learning_paths.py
 python3 scripts/test_operator_kits.py
-python3 scripts/test_platform_practitioner.py
+python3 scripts/test_platform_contracts.py
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-The first command validates package syntax, manifests, frontmatter, references, relationships, and public-safety markers. The second runs deterministic routing and Chapter 1 to 5 coverage tests. The third verifies checksums, portable paths, script and data syntax, and all three operator kits through their offline suites. The fourth runs positive and mutation tests for Chapter 5 routing, target values, two-spoke and evidence boundaries. These checks validate the package and its offline behaviour, not a live cloud or cluster.
+The first command validates package syntax, manifests, frontmatter, references, relationships, and public-safety markers. The second runs deterministic routing and Chapter 1 to 5 coverage tests. The third verifies checksums, portable paths, script and data syntax, and all three operator kits through their offline suites. The platform-contract command checks Chapter 5 schema and evidence boundaries; unittest discovery checks the OpenStack operational toolkit. These checks validate the package and its offline behaviour, not a live cloud or cluster.

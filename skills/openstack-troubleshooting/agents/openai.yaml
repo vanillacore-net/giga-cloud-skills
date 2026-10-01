@@ -1,0 +1,5 @@
+interface:
+  display_name: OpenStack Troubleshooting
+  short_description: Diagnose tenant failures and verify owned repairs.
+policy:
+  allow_implicit_invocation: true
