@@ -128,7 +128,7 @@ Package, behavioral fixture and independent-copy tests are automated. Host skill
 
 ## Claude Code and Codex
 
-The repository ships `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`. Add the repository to the approved plugin source or marketplace. Install `vanillacore-cloud-skills` in Claude Code or `vanillacore-giga-cloud` in Codex, then begin a new session so the client discovers every folder under `skills/`.
+The repository ships `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`. Add the repository to the approved plugin source or marketplace. Install `giga-cloud-skills` in Claude Code or Codex, then begin a new session so the client discovers every folder under `skills/`.
 
 ## Evidence discipline
 
