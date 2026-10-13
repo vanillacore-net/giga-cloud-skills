@@ -6,6 +6,7 @@ author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
 metadata:
+  provider: VanillaCore
   hermes:
     tags: [giga, kubernetes, cluster-api, capo, gitops, learning, chapter-4]
     related_skills:

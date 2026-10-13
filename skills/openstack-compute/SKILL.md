@@ -6,6 +6,7 @@ author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
 metadata:
+  provider: VanillaCore
   hermes:
     tags: [giga, openstack, operations, compute, chapter-3]
     related_skills:

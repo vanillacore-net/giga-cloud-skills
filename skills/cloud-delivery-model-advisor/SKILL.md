@@ -6,6 +6,7 @@ author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
 metadata:
+  provider: VanillaCore
   hermes:
     tags: [cloud, hosting, delivery-model, learning, chapter-1]
     related_skills:
