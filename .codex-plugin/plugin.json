@@ -1,5 +1,5 @@
 {
-  "name": "vanillacore-giga-cloud",
+  "name": "giga-cloud-skills",
   "version": "0.5.0",
   "description": "GIGA cloud learning, OpenStack tenant operations and Kubernetes lifecycle skills.",
   "skills": "./skills/"

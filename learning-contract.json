@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "package": "vanillacore-giga-cloud",
+  "package": "giga-cloud-skills",
   "package_version": "0.5.0",
   "expected_skills": [
     "giga-cloud-learning-guide",
