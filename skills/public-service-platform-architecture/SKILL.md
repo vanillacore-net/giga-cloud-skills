@@ -6,6 +6,7 @@ author: Karsten Samaschke, Hermes Agent
 license: Proprietary
 platforms: [linux, macos, windows]
 metadata:
+  provider: VanillaCore
   hermes:
     tags: [cloud, architecture, iaas, platform, learning, chapter-2]
     related_skills:

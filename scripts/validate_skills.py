@@ -116,6 +116,8 @@ for name in sorted(actual_skills):
         fail(f"{name}: description must be one sentence of at most 60 characters")
     if not isinstance(data.get("platforms"), list) or not data.get("platforms"):
         fail(f"{name}: platforms must be a non-empty list")
+    if not isinstance(data.get("metadata"), dict) or not data["metadata"].get("provider"):
+        fail(f"{name}: metadata.provider is required by the Skills Marketplace")
     hermes = data.get("metadata", {}).get("hermes", {}) if isinstance(data.get("metadata"), dict) else {}
     if not isinstance(hermes.get("tags"), list) or not hermes.get("tags"):
         fail(f"{name}: metadata.hermes.tags must be a non-empty list")
