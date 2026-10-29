@@ -41,6 +41,10 @@ The Chapter 4 kit retains its original source pin. Two portability-level documen
 
 No live cloud operation is implied by this source record. Version-specific client syntax, offline behavior, portable package checks and actual tenant acceptance are reported separately.
 
+## Version 0.6.0 hosting planning
+
+Version 0.6.0 adds `hosting-needs-planning` and `hosting-platform-planning`. They generalise a two-step planning demonstration into reusable skills for any set of two to four services. The results app, the page rules and two fictional example cases are newly authored for the package. They contain no event, organisation, person or customer data. The skills are self-contained and only optionally refer to the Chapter 1 and 2 learning skills.
+
 ## Scope rules
 
 1. Chapter 1 chooses a bounded next step for one service or workload. It does not approve a provider or architecture.

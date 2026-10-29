@@ -1,0 +1,5 @@
+interface:
+  display_name: Hosting Needs Planning
+  short_description: Profile what each service needs from its hosting.
+policy:
+  allow_implicit_invocation: true

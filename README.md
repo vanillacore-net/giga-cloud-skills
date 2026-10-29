@@ -1,6 +1,6 @@
 # GIGA Cloud Learning Skills
 
-This repository packages fourteen public-safe agent skills for Claude Code, Codex, and independent checkout installation. The Chapter 1 to 4 learning system is joined by five practical OpenStack usage skills. Users can understand a task, inspect an existing environment, prepare a change and execute an explicitly approved operation through the same versioned tools.
+This repository packages sixteen public-safe agent skills for Claude Code, Codex, and independent checkout installation. The Chapter 1 to 4 learning system is joined by five practical OpenStack usage skills and two hosting planning skills with a small results app. Users can understand a task, inspect an existing environment, prepare a change and execute an explicitly approved operation through the same versioned tools.
 
 ## Skill system
 
@@ -37,6 +37,17 @@ Each skill includes a standalone `assets/operator-kit/scripts/openstack_ops.py` 
 The skill of skills uses a portable operational router for English and German task requests, preserves the case and prior IDs, activates one focused skill and keeps a continuation queue for cross-domain tasks. A routing result is never approval to change state. The Chapter 3 learning baseline and Chapter 4 handoff remain intact.
 
 See [usage and installation](docs/install-and-use.md) and [executable operation contract](docs/openstack-operations-api.md). This release checks OpenStackClient 8.2.0 syntax and offline behavior. It does not claim live acceptance on your cloud.
+
+## Hosting planning with a results app
+
+Two skills plan hosting for several services that share a label but not their needs, for example "citizen services in the cloud". They work from short case files and can show their results in a small static web app that ships with the first skill.
+
+| Step | Skill | Result | Results page |
+|---|---|---|---|
+| 1 | `hosting-needs-planning` | One needs profile per service, shared and separate capabilities, open items | `planning.html` |
+| 2 | `hosting-platform-planning` | One IaaS and Kubernetes platform for all services, with an architecture diagram | `platform.html` |
+
+The app builder is `skills/hosting-needs-planning/assets/results-app/build_app.py`. It needs only Python 3, takes a directory of `case-*.md` files and an optional `app.json` for title, question, logo, accent colour and links, and produces a start page, a case page and the two empty result pages. Two fictional example cases are in `skills/hosting-needs-planning/assets/examples/`. Both skills plan only; they recommend no provider or product and never fill an unknown.
 
 ## Learning contract
 

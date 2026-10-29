@@ -1,0 +1,5 @@
+interface:
+  display_name: Hosting Platform Planning
+  short_description: Plan one IaaS and Kubernetes platform for several services.
+policy:
+  allow_implicit_invocation: true

@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "package": "giga-cloud-skills",
-  "package_version": "0.5.0",
+  "package_version": "0.6.0",
   "expected_skills": [
     "giga-cloud-learning-guide",
     "workload-cloud-fit-assessment",
@@ -16,7 +16,9 @@
     "openstack-compute",
     "openstack-networking",
     "openstack-storage",
-    "openstack-troubleshooting"
+    "openstack-troubleshooting",
+    "hosting-needs-planning",
+    "hosting-platform-planning"
   ],
   "learning_modes": {
     "ask": "Answer directly, then separate transferable concepts, reference details, assumptions, validation status, and sources.",
@@ -261,5 +263,24 @@
       "prior_handoff"
     ],
     "approval": "Explicit operation-specific approval bound to the saved plan digest; a router never authorizes mutation."
+  },
+  "hosting_planning": {
+    "skills": [
+      "hosting-needs-planning",
+      "hosting-platform-planning"
+    ],
+    "order": [
+      "hosting-needs-planning",
+      "hosting-platform-planning"
+    ],
+    "outputs": {
+      "hosting-needs-planning": "hosting_needs_plan",
+      "hosting-platform-planning": "hosting_platform_plan"
+    },
+    "results_app": "skills/hosting-needs-planning/assets/results-app/build_app.py",
+    "result_pages": {
+      "hosting-needs-planning": "planning.html",
+      "hosting-platform-planning": "platform.html"
+    }
   }
 }

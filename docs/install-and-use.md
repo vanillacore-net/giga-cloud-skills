@@ -1,6 +1,6 @@
 # Install and use the GIGA Cloud Learning Skills
 
-The package has fourteen user-facing skills. Install `giga-cloud-learning-guide` when a learner needs the Chapter 1 to 4 journey or is unsure where a question belongs. Install a focused skill when the question and handoff are already bounded.
+The package has sixteen user-facing skills. Install `giga-cloud-learning-guide` when a learner needs the Chapter 1 to 4 journey or is unsure where a question belongs. Install a focused skill when the question and handoff are already bounded.
 
 ## Direct skill installation
 
@@ -125,6 +125,30 @@ Keep the investigation read-only and hand off any repair as a separate proposal.
 These are not automatic approvals. For a mutating request, the agent must show the actual prepared proposal and receive its action-specific approval. A proposal hash computed by the agent is not evidence that a person approved it. Existing OpenTofu, CAPI and GitOps owners remain authoritative.
 
 Package, behavioral fixture and independent-copy tests are automated. Host skill activation and live tenant behavior are separate verification levels; neither is inferred from CLI help or a checksum check.
+
+## Hosting planning and the results app
+
+Install `hosting-needs-planning` and `hosting-platform-planning` together when two to four services should be planned side by side and shown on a screen. Each also works alone.
+
+1. Write one `case-*.md` per service, following `skills/hosting-needs-planning/assets/examples/cases/`.
+2. Build the app in your own working directory, never inside the installed skill:
+
+   ```bash
+   python3 <skill>/assets/results-app/build_app.py --cases ./cases --out ./out --config app.json
+   python3 -m http.server 8765 --directory ./out
+   ```
+
+3. In an agent session in the same working directory, ask for the planning step, then the platform step:
+
+   ```text
+   Look at the cases in cases/. What does each one need from its hosting, and how can one platform run all of them? Use hosting-needs-planning and fill out/planning.html.
+   ```
+
+   ```text
+   Plan that platform with IaaS and Kubernetes and fill out/platform.html, with an architecture diagram. Use hosting-platform-planning.
+   ```
+
+Rebuild the app to reset both result pages. Run one agent session per app; two sessions overwrite each other's pages.
 
 ## Claude Code and Codex
 
